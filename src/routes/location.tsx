@@ -1,3 +1,4 @@
+import { RoleExtra } from "@/components/r2";
 import { createFileRoute } from "@tanstack/react-router";
 import { Photo, Shell, SourceNote, SubHero, pageHead, QuickAnswer } from "@/components/layout";
 import { LOCATION_BLOCKS, LOCATION_NOTES, img } from "@/data/content";
@@ -38,6 +39,7 @@ function Page() {
         </p>
       </article>
       <SourceNote />
+      <RoleExtra path="/location" />
     </Shell>
   );
 }

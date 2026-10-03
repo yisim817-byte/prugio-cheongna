@@ -1,3 +1,4 @@
+import { RoleExtra } from "@/components/r2";
 import { createFileRoute } from "@tanstack/react-router";
 import { Photo, Shell, SourceNote, SubHero, pageHead, QuickAnswer } from "@/components/layout";
 import { PLACES, PROJECT_PHONE_DISPLAY, PROJECT_PHONE_TEL } from "@/data/content";
@@ -37,6 +38,7 @@ function Page() {
         </p>
       </article>
       <SourceNote />
+      <RoleExtra path="/contact" />
     </Shell>
   );
 }

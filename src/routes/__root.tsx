@@ -12,13 +12,9 @@ export const Route = createRootRoute({
       { title: "청라 아크원 푸르지오" },
       { name: "description", content: "직원 배포용 사업 안내. 공식 분양 홈페이지가 아닙니다." },
       { name: "robots", content: "noindex, nofollow" },
-      { property: "og:url", content: SITE_ORIGIN },
-      { property: "og:title", content: "청라 아크원 푸르지오" },
-      { property: "og:type", content: "website" },
       { name: "theme-color", content: "#1c3a32" },
     ],
     links: [
-      { rel: "canonical", href: SITE_ORIGIN },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "stylesheet", href: appCss },
       { rel: "manifest", href: "/__grok/manifest.webmanifest" },

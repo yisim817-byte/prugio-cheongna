@@ -37,6 +37,7 @@ import { randomBytes } from "node:crypto";
 import { Pool } from "pg";
 import { ensureDbReady, getPglite } from "../db";
 import { emailAndPasswordEnabled } from "./email-password";
+import { PASSWORD_MAX, PASSWORD_MIN } from "../staff-login";
 import { GATE_PROVIDER_ID, gateIdentitySessions } from "./gate-session.server";
 import { GROK_PROVIDERS } from "./providers";
 import { pgliteDialect } from "./pglite-dialect";
@@ -95,6 +96,7 @@ const explicitBaseURL = env("BETTER_AUTH_URL");
 // Explicit `string[]` (not a readonly tuple) — Better Auth's DynamicBaseURLConfig
 // requires a mutable `allowedHosts: string[]`.
 const previewAllowedHosts: string[] = [...PREVIEW_ALLOWED_HOSTS];
+// Production domains of THIS site, so id/password sign-in passes the origin check.
 const SITE_HOSTS = ["www.xn--oi2b90bo0vusdbte57o.site", "xn--oi2b90bo0vusdbte57o.site"];
 // Local `npm run dev` (port 8080 contract). Browsers may send Origin as any of
 // these for the same server — trusting only `localhost` rejects `127.0.0.1` and
@@ -152,7 +154,10 @@ export const SESSION_TOKEN_COOKIE = "__Host-grok-auth.session_token";
 
 // Built separately so the `betterAuth({...})` call stays easy to edit without
 // breaking brackets (models often trip on the conditional plugin spread).
-const grokOAuthPlugin = authConfigured
+// Google/X sign-in through the Grok broker is OFF on these sites (2026-10-03):
+// the admin screen uses operator-issued id/password logins only.
+const OAUTH_SIGN_IN_ENABLED = false;
+const grokOAuthPlugin = authConfigured && OAUTH_SIGN_IN_ENABLED
   ? genericOAuth({
       config: GROK_PROVIDERS.map(({ providerId, idp }) => ({
         providerId,
@@ -212,8 +217,33 @@ export const auth = betterAuth({
   // flicker-prevention guidance (gate on `isPending`; SSR the session).
   session: { cookieCache: { enabled: true, maxAge: 300 } },
 
-  // Local email/password — toggled only via `./email-password` (not a plugin).
-  ...(emailAndPasswordEnabled ? { emailAndPassword: { enabled: true } } : {}),
+  // Local email/password — toggled via `./email-password`. Public sign-up is
+  // disabled: logins are created only by scripts/seed-admins.mjs and the owner
+  // reset in /admin.
+  ...(emailAndPasswordEnabled
+    ? {
+        emailAndPassword: {
+          enabled: true,
+          disableSignUp: true,
+          autoSignIn: false,
+          minPasswordLength: PASSWORD_MIN,
+          maxPasswordLength: PASSWORD_MAX,
+        },
+      }
+    : {}),
+
+  // Throttle guessing. Stored in the DB ("rateLimit" table, migration 0004) so
+  // the limit holds across serverless instances.
+  rateLimit: {
+    enabled: true,
+    storage: "database",
+    window: 60,
+    max: 100,
+    customRules: {
+      "/sign-in/email": { window: 300, max: 10 },
+      "/sign-up/email": { window: 300, max: 3 },
+    },
+  },
 
   // `__Host-` prefixed cookies: the browser REFUSES any same-named cookie that
   // carries a `Domain` attribute, so a sibling `*.grok.me` app cannot "toss" a

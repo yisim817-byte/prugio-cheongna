@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Photo, Shell, SourceNote, SubHero, pageHead } from "@/components/layout";
+import { Photo, Shell, SourceNote, SubHero, pageHead, QuickAnswer } from "@/components/layout";
 import { PLACES, PROJECT_PHONE_DISPLAY, PROJECT_PHONE_TEL } from "@/data/content";
 
 export const Route = createFileRoute("/contact")({
@@ -11,6 +11,7 @@ function Page() {
   return (
     <Shell>
       <SubHero en="CONTACT" title="오시는 길" crumbs="사업안내 / 오시는 길" />
+      <QuickAnswer path="/contact" />
       <article className="mx-auto grid max-w-6xl gap-8 px-4 py-16">
         {PLACES.map((place) => (
           <section key={place.title} className="grid gap-4 border border-line p-4 md:grid-cols-[280px_1fr] md:p-6">

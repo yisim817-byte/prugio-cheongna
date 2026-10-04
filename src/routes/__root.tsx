@@ -12,6 +12,7 @@ export const Route = createRootRoute({
       { title: "청라 아크원 푸르지오" },
       { name: "robots", content: "noindex, nofollow" },
       { name: "theme-color", content: "#1c3a32" },
+      { name: "google-site-verification", content: "TfTytsz2e4bDSPQ4gKBUt30vHIk68OFJEHuYbUtt5Bk" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },

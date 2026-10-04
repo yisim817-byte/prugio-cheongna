@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Photo, Shell, SourceNote, SubHero, pageHead } from "@/components/layout";
+import { Photo, Shell, SourceNote, SubHero, pageHead, QuickAnswer } from "@/components/layout";
 import { LOCATION_BLOCKS, LOCATION_NOTES, img } from "@/data/content";
 
 export const Route = createFileRoute("/location")({
@@ -11,6 +11,7 @@ function Page() {
   return (
     <Shell>
       <SubHero en="LOCATION" title="입지환경" crumbs="입지안내 / 입지환경" />
+      <QuickAnswer path="/location" />
       <article className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="font-serif text-3xl">청라의 기다림이 완성되는 곳</h2>
         <p className="mt-3 text-muted">푸르지오의 품격을 더하다 · CENTRAL LOCATION PRUGIO</p>

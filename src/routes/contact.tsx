@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Photo, Shell, SourceNote, SubHero, pageHead, QuickAnswer } from "@/components/layout";
+import { Photo, Shell, SourceNote, SubHero, pageHead, PageFaq, QuickAnswer } from "@/components/layout";
 import { PLACES, PROJECT_PHONE_DISPLAY, PROJECT_PHONE_TEL } from "@/data/content";
 
 export const Route = createFileRoute("/contact")({
@@ -12,6 +12,7 @@ function Page() {
     <Shell>
       <SubHero en="CONTACT" title="오시는 길" crumbs="사업안내 / 오시는 길" />
       <QuickAnswer path="/contact" />
+      <PageFaq path="/contact" />
       <article className="ak-wrap ak-page">
         <div className="border-t border-ink">
           {PLACES.map((place) => (

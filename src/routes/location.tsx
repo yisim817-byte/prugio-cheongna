@@ -16,6 +16,7 @@ function Page() {
       <PageFaq path="/location" />
       <article className="ak-wrap ak-page">
         <h2 className="ak-h2">청라의 기다림이 완성되는 곳</h2>
+        <p className="ak-lead">스타필드 청라는 2028년 개장 예정입니다. 서울아산청라병원은 2025년 12월 착공했으며 2029년 준공이 목표입니다. 하나금융그룹 청라 헤드쿼터는 2026년 5월 준공했고, 2026년 10월 2일 문을 열었습니다. 자료 기준 2026-10-09 · 출처 인천광역시 보도자료 2026-07-15·2025-12-30·2026-10-02</p>
         <p className="ak-lead">푸르지오의 품격을 더하다 · CENTRAL LOCATION PRUGIO</p>
         <Photo
           src={img("/resources/img/sub/location_map_img.v4.jpg")}

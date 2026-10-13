@@ -13,6 +13,7 @@ export const Route = createRootRoute({
       { name: "robots", content: "noindex, nofollow" },
       { name: "theme-color", content: "#1c3a32" },
       { name: "google-site-verification", content: "TfTytsz2e4bDSPQ4gKBUt30vHIk68OFJEHuYbUtt5Bk" },
+      { name: "naver-site-verification", content: "8c39d5528540c65c44795ca13ffb3d740a72b20a" },
     ],
     links: [
       { rel: "icon", type: "image/png", sizes: "144x144", href: "/g-icon-144.png?v=20261009" },

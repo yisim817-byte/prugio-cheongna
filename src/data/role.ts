@@ -1,6 +1,5 @@
 import { PLACES } from "./content";
 import type { Role } from "./role-types";
-import { SEO_SOURCE_LINE } from "./seo";
 
 /**
  * 이 사이트의 첫 화면 데이터 (B · 푸르지오청라.site · 역할: 입지·교통·생활권).
@@ -9,7 +8,7 @@ import { SEO_SOURCE_LINE } from "./seo";
  */
 
 /** 출처 줄의 기준일은 seo.ts 의 값을 그대로 쓴다. */
-const BASE_DATE = SEO_SOURCE_LINE.match(/기준일\s*([\d.]+)/)?.[1] ?? "";
+const BASE_DATE = "2026.09.17";
 
 export const ROLE: Role = {
   tone: "mist",
@@ -60,7 +59,6 @@ export const ROLE: Role = {
     },
   ],
   stripSource: [
-    { k: "출처", v: "사업주체 공개자료" },
     { k: "기준일", v: BASE_DATE },
     { k: "안내", v: "예정 사업은 확정 일정이 아닙니다." },
   ],
@@ -86,7 +84,6 @@ export const ROLE: Role = {
       },
     ],
     source: [
-      { k: "출처", v: "사업주체 공개자료" },
       { k: "기준일", v: BASE_DATE },
       { k: "안내", v: "개발계획은 관계기관 사정으로 변경·취소될 수 있습니다.", wide: true },
     ],

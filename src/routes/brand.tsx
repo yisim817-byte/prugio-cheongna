@@ -3,7 +3,7 @@ import { Photo, Shell, SourceNote, SubHero, pageHead } from "@/components/layout
 import { HISTORY, img } from "@/data/content";
 
 export const Route = createFileRoute("/brand")({
-  head: () => pageHead("히스토리", "/brand"),
+  head: () => pageHead("히스토리", "/brand", { canonical: false }),
   component: Page,
 });
 

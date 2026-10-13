@@ -87,7 +87,7 @@ const PAGE_DESCRIPTION: Record<string, string> = {
  * path가 SEO_PAGES(역할 페이지)에 있으면 index,follow + 전용 title·description + JSON-LD.
  * 그 밖의 페이지는 기존대로 noindex, nofollow.
  */
-export function pageHead(title: string, path?: string) {
+export function pageHead(title: string, path?: string, opts: { canonical?: boolean } = {}) {
   const seo = path ? SEO_PAGES[path] : undefined;
   const url = path === undefined ? undefined : path === "/" ? SEO_ORIGIN : `${SEO_ORIGIN}${path}`;
   const full = seo?.title ?? `${title} | 청라 아크원 푸르지오`;
@@ -109,7 +109,7 @@ export function pageHead(title: string, path?: string) {
           ]
         : []),
     ],
-    links: url ? [{ rel: "canonical", href: url }] : [],
+    links: url && opts.canonical !== false ? [{ rel: "canonical", href: url }] : [],
     scripts:
       seo && url && path
         ? [

@@ -20,7 +20,7 @@ function Page() {
         <p className="ak-lead">푸르지오의 품격을 더하다 · CENTRAL LOCATION PRUGIO</p>
         <Photo
           src={img("/resources/img/sub/location_map_img.v4.jpg")}
-          alt="입지 지도"
+          alt="M5 블록과 주변 시설 이름이 적힌 지도"
           className="mt-8 w-full"
         />
         <div className="ak-index mt-12">

@@ -519,7 +519,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
           </div>
           <div className="om-hero__definition_scene" data-hero-definition-scene="">
             <div className="om-hero__transition" aria-hidden="true">
-              <img src={asset("hero_brand_img.v4.png")} alt="" loading="lazy" />
+              <img src={asset("hero_brand_img.v4.png")} alt="원 안에 곡선 표식과 격자 무늬" loading="lazy" />
             </div>
             <div className="om-hero__definition">
               <span className="om-hero__definition_icon" aria-hidden="true">
@@ -664,7 +664,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                 <img className="om-location__map_image" src={asset("location_map.v4.png")} alt="청라 아크원 푸르지오 위치도" loading="lazy" />
                 <picture className="om-location__bubble">
                   <source media="(max-width: 1024px)" srcSet={asset("location_bubble_m.v4.png")} />
-                  <img src={asset("location_bubble.v4.png")} alt="" loading="lazy" />
+                  <img src={asset("location_bubble.v4.png")} alt="M5와 견본주택을 확대한 원형 지도" loading="lazy" />
                 </picture>
               </figure>
             </div>
@@ -735,9 +735,9 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
             <p className="om-history__promotion_name">청라 아크원 푸르지오</p>
           </div>
           <div className="om-history__promotion_collage" aria-hidden="true">
-            <img className="om-history__promotion_image om-history__promotion_image-02" src={asset("history_img_02.v4.jpg")} alt="" loading="lazy" />
+            <img className="om-history__promotion_image om-history__promotion_image-02" src={asset("history_img_02.v4.jpg")} alt="어두운 배경의 둥근 입자 곡선" loading="lazy" />
             <img className="om-history__promotion_image om-history__promotion_image-ark_one" src={asset("history_img_03.v4.jpg")} alt="청라 아크원 푸르지오 투시도" loading="lazy" />
-            <img className="om-history__promotion_image om-history__promotion_image-01" src={asset("history_img_01.v4.jpg")} alt="" loading="lazy" />
+            <img className="om-history__promotion_image om-history__promotion_image-01" src={asset("history_img_01.v4.jpg")} alt="옅은 푸른 천이 흐르는 주름" loading="lazy" />
           </div>
           <img className="om-history__promotion_logo" src={asset("history_logo.svg")} alt="푸르지오" loading="lazy" />
           <Link to="/register" className="om-history__promotion_link" aria-label={`청라 아크원 푸르지오 ${REGISTER_LABEL}`}>
@@ -767,21 +767,25 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
           <article className="om-premium__panel om-premium__panel-intro">
             <div className="om-premium__intro_split" aria-hidden="true">
               <div className="om-premium__intro_media">
-                <img className="om-premium__intro_image om-premium__intro_image-opening" src={asset("premium_img_left_01.v4.jpg")} alt="" loading="lazy" />
-                <img className="om-premium__intro_image om-premium__intro_image-family" src={asset("premium_img_left_02.v4.jpg")} alt="" loading="lazy" />
+                <img className="om-premium__intro_image om-premium__intro_image-opening" src={asset("premium_img_left_01.v4.jpg")} alt="쇼핑백을 들고 가로수 길을 걷는 세 사람" loading="lazy" />
+                <img className="om-premium__intro_image om-premium__intro_image-family" src={asset("premium_img_left_02.v4.jpg")} alt="창가 소파의 사람과 장난감을 만지는 아이들" loading="lazy" />
                 <div className="om-premium__intro_carousel">
-                  {["premium_visual_img_01.v4.jpg", "premium_visual_img_02.v4.jpg", "premium_visual_img_03.v4.jpg"].map((file, i) => (
+                  {[
+                    ["premium_visual_img_01.v4.jpg", "노을이 드는 창가의 소파와 식탁"],
+                    ["premium_visual_img_02.v4.jpg", "나무 수납과 스툴이 있는 주방"],
+                    ["premium_visual_img_03.v4.jpg", "햇살이 드는 침대와 창밖 나무"],
+                  ].map(([file, alt], i) => (
                     <img
                       key={file}
                       className={`om-premium__intro_image om-premium__intro_image-visual${i === visual ? " is-current" : ""}`}
                       src={asset(file)}
-                      alt=""
+                      alt={alt}
                       loading="lazy"
                     />
                   ))}
                 </div>
               </div>
-              <img className="om-premium__intro_texture" src={asset("premium_right_img_01.v4.jpg")} alt="" loading="lazy" />
+              <img className="om-premium__intro_texture" src={asset("premium_right_img_01.v4.jpg")} alt="옅은 갈색의 가로 결 질감" loading="lazy" />
             </div>
             <p className="om-premium__intro_title" aria-hidden="true" lang="en">
               <span>ARK-ONE &nbsp; PREMIUM</span>
@@ -815,7 +819,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
               <div className="om-premium__lifestyle_collage">
                 <span className="om-premium__decoration om-premium__decoration-circle_top" aria-hidden="true" />
                 <span className="om-premium__decoration om-premium__decoration-circle_bottom" aria-hidden="true" />
-                <img className="om-premium__decoration om-premium__decoration_stripe" src={asset("premium_conf_03.v4.png")} alt="" aria-hidden="true" loading="lazy" />
+                <img className="om-premium__decoration om-premium__decoration_stripe" src={asset("premium_conf_03.v4.png")} alt="흰 사선이 반복된 반원 장식" aria-hidden="true" loading="lazy" />
                 <figure className="om-premium__media om-premium__media-main">
                   <LazyVideo poster={asset("premium_img_01.v4.jpg")} reduced={reduced} label="도심의 고층 건축물 영상" />
                   <figcaption>이 영상은 AI로 제작된 것으로서 실제와 다릅니다.</figcaption>
@@ -856,7 +860,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                   <figcaption className="om-premium__video_caption">이 영상은 AI로 제작된 것으로서 실제와 다릅니다.</figcaption>
                 </figure>
                 <figure className="om-premium__video_echo">
-                  <img src={asset("premium_poster_03.v4.jpg")} alt="" aria-hidden="true" loading="lazy" />
+                  <img src={asset("premium_poster_03.v4.jpg")} alt="잔 두 개를 손에 든 모습" aria-hidden="true" loading="lazy" />
                   <figcaption className="om-premium__video_caption">이미지컷</figcaption>
                 </figure>
               </div>

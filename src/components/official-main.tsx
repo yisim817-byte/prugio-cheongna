@@ -690,7 +690,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                 {HISTORY_EVENTS.map((ev, i) => (
                   <li className={`om-history__event om-history__event-${ev.key}`} key={ev.key}>
                     {ev.key === "ark_one" ? (
-                      <img className="om-history__climax" src={asset("history_climax.v4.png")} alt="Climax" loading="lazy" />
+                      <img className="om-history__climax" src={asset("history_climax.v4.png")} alt="손글씨로 쓴 Climax 단어" loading="lazy" />
                     ) : null}
                     <div className="om-history__event_item">
                       {ev.tbd ? (
@@ -739,7 +739,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
             <img className="om-history__promotion_image om-history__promotion_image-ark_one" src={asset("history_img_03.v4.jpg")} alt="청라 아크원 푸르지오 투시도" loading="lazy" />
             <img className="om-history__promotion_image om-history__promotion_image-01" src={asset("history_img_01.v4.jpg")} alt="옅은 푸른 천이 흐르는 주름" loading="lazy" />
           </div>
-          <img className="om-history__promotion_logo" src={asset("history_logo.svg")} alt="푸르지오" loading="lazy" />
+          <img className="om-history__promotion_logo" src={asset("history_logo.svg")} alt="히스토리 구간의 푸르지오 로고" loading="lazy" />
           <Link to="/register" className="om-history__promotion_link" aria-label={`청라 아크원 푸르지오 ${REGISTER_LABEL}`}>
             <span className="om-history__promotion_link_copy">
               <small>청라 아크원 푸르지오</small>
@@ -907,7 +907,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
             </p>
             <div className="om-brand__story_footer" aria-label="Brand Story" lang="en">
               <span>BRAND</span>
-              <img src={asset("brand_logo.svg")} alt="푸르지오" loading="lazy" decoding="async" />
+              <img src={asset("brand_logo.svg")} alt="브랜드 구간의 푸르지오 로고" loading="lazy" decoding="async" />
               <span>STORY</span>
             </div>
           </article>
@@ -916,7 +916,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
               <div className="om-brand__gallery_content">
                 <img className="om-brand__panel_background" src={asset("brand_bg_03.v4.jpg")} alt="" loading="lazy" decoding="async" />
                 <header className="om-brand__gallery_header">
-                  <img className="om-brand__gallery_emblem" src={asset("brand_logo.svg")} alt="푸르지오" loading="lazy" decoding="async" />
+                  <img className="om-brand__gallery_emblem" src={asset("brand_logo.svg")} alt="브랜드 구간의 푸르지오 로고" loading="lazy" decoding="async" />
                   <p className="om-brand__gallery_brand" lang="en">
                     PRUGIO
                   </p>
@@ -955,7 +955,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                   <p className="om-brand__gallery_footer">
                     사람과 자연이 함께하는 <span>프리미엄 주거문화 공간</span>
                   </p>
-                  <img className="om-brand__gallery_wordmark" src={asset("brand_img_logo.v4.png")} alt="PRUGIO" loading="lazy" decoding="async" />
+                  <img className="om-brand__gallery_wordmark" src={asset("brand_img_logo.v4.png")} alt="PRUGIO 영문 워드마크" loading="lazy" decoding="async" />
                 </div>
               </div>
             </div>

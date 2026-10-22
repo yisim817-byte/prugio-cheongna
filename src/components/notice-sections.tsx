@@ -202,7 +202,7 @@ function PlanFigure({ name, label }: { name: string; label: string }) {
       <a href={`/plans/${name}.png`} target="_blank" rel="noopener">
         <picture>
           <source type="image/webp" srcSet={`/plans/${name}.webp`} />
-          <img src={`/plans/${name}.png`} alt={`청라 아크원 푸르지오 ${label} 평면 안내도`} width={2400} height={1500} loading="lazy" decoding="async" />
+          <img src={`/plans/${name}.png`} alt={`청라 아크원 푸르지오 ${label} 평면 안내도`} width={2000} height={1250} loading="lazy" decoding="async" />
         </picture>
       </a>
       <figcaption>{PLAN_NOTE}</figcaption>

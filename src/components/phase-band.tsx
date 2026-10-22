@@ -6,6 +6,7 @@ const PHASE_CFG = {
   fnUrl: "https://jzmktahlrwtrtejjflrw.supabase.co/functions/v1/arkone-site-phase",
   fnHeaders: {}, // arkone-visit-config 호출과 같은 방식(별도 헤더·anon 키 없음)
   registerPath: "/register",
+  visitPath: "/visit", // 작업지시서 13: 단계 1 「방문 상담 예약」 → 방문예약 전용 페이지
   scheduleHref: "/changeinfo",
   noticeUrl: "https://www.applyhome.co.kr/ai/aia/selectAPTLttotPblancDetail.do?houseManageNo=2026000496&pblancNo=2026000496",
 };
@@ -37,8 +38,19 @@ export function PhaseBand() {
     let live = true;
     Promise.all([loadOnce("link", "/phase-band.css"), loadOnce("script", "/phase-band.js")])
       .then(() => { if (live && w.ArkonePhaseBand) return w.ArkonePhaseBand.mountInto(ref.current); })
+      .then(() => { if (live) syncHeight(); })
       .catch(() => { /* 띠를 못 불러와도 본문은 그대로 */ });
-    return () => { live = false; };
+    // 작업지시서 13: 홈 히어로가 헤더+띠 아래로 깔리도록 띠 높이를 CSS 변수(--ak-band-h)로 알린다.
+    const syncHeight = () => {
+      const h = ref.current ? ref.current.offsetHeight : 0;
+      document.documentElement.style.setProperty("--ak-band-h", `${h}px`);
+    };
+    window.addEventListener("resize", syncHeight);
+    return () => {
+      live = false;
+      window.removeEventListener("resize", syncHeight);
+      document.documentElement.style.removeProperty("--ak-band-h");
+    };
   }, []);
   return <div className="ak-phase-band-slot" ref={ref} />;
 }

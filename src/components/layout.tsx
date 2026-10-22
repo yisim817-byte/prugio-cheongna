@@ -46,9 +46,10 @@ export function Photo({
 export function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-paper text-ink">
-      {/* 단계 띠는 헤더 위에 둔다 — 홈 히어로가 투명 헤더 아래로 올라가는(margin-top: -헤더 높이) 구조라 헤더 아래에 두면 히어로에 가려진다 */}
-      <PhaseBand />
+      {/* 작업지시서 13: 아크원푸르지오.site와 같이 헤더 → 단계 띠 순서. 홈 히어로는 헤더+띠 높이만큼 올라가 그 아래에 깔리고,
+          띠는 히어로 위에 그려진다(styles.css .ak-phase-band-slot · .om-hero). */}
       <Header />
+      <PhaseBand />
       {children}
       <Footer />
       <MobileBar />
@@ -78,6 +79,7 @@ const PAGE_DESCRIPTION: Record<string, string> = {
   언론보도: "청라 아크원 푸르지오 관련 언론 기사 목록.",
   홍보영상: "청라 아크원 푸르지오 홍보영상.",
   사전고객등록: "사전고객등록 안내. 청약 신청이 아니며 주민등록번호는 받지 않습니다.",
+  "모델하우스 방문예약": "청라 아크원 푸르지오 모델하우스(견본주택) 방문예약. 방문 희망 날짜를 남기면 담당자가 전화로 방문 시간을 안내합니다.",
   "아파트 사전고객등록 이벤트": "사전고객등록 이벤트 조건 안내. 등록만으로 지급되지 않으며 청약 신청이 아닙니다.",
   개인정보처리방침: "개인정보 처리방침.",
   "접수 관리": "운영자 접수 확인 화면.",

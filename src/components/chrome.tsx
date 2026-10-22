@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import { NAV, PROJECT_PHONE_DISPLAY, PROJECT_PHONE_TEL } from "@/data/content";
 import { PROJECT_NAME, REGISTER_LABEL } from "@/data/labels";
 import { SEO_FAQS, SEO_PAGES } from "@/data/seo";
@@ -39,14 +39,21 @@ export function Header() {
               ) : null}
             </div>
           ))}
+          {/* 작업지시서 13: 아크원푸르지오.site와 같이 사전고객등록은 메뉴 글자로, 그 옆에 방문예약 */}
+          <div className="ak-hd__item">
+            <Link to="/register">{REGISTER_LABEL}</Link>
+          </div>
+          <div className="ak-hd__item">
+            <Link to="/visit">방문예약</Link>
+          </div>
         </nav>
         <a href={PROJECT_PHONE_TEL} className="ak-hd__tel ak-num">
           <small>상담</small>
           {PROJECT_PHONE_DISPLAY}
         </a>
-        <Link to="/register" className="ak-btn ak-btn--primary ak-btn--sm ak-hd__cta">
-          {REGISTER_LABEL}
-        </Link>
+        <a href={PROJECT_PHONE_TEL} className="ak-hd__mtel" aria-label={`전화 상담 ${PROJECT_PHONE_DISPLAY}`}>
+          <Phone size={14} aria-hidden="true" />
+        </a>
         <button
           type="button"
           className="ak-hd__menu"
@@ -78,6 +85,10 @@ export function Header() {
                 </div>
               );
             })}
+            <div className="ak-hd__group">
+              <Link to="/register" onClick={() => setOpen(false)}>{REGISTER_LABEL}</Link>
+              <Link to="/visit" onClick={() => setOpen(false)}>방문예약</Link>
+            </div>
           </div>
         </div>
       ) : null}
@@ -116,6 +127,7 @@ export function Footer() {
           <div className="ak-ft__links">
             <Link to="/privacy">개인정보처리방침</Link>
             <Link to="/register">{REGISTER_LABEL}</Link>
+            <Link to="/visit">모델하우스 방문예약</Link>
             <Link to="/login" rel="nofollow">관리자 로그인</Link>
           </div>
         </div>
@@ -125,7 +137,7 @@ export function Footer() {
 }
 
 /** 등록·로그인·관리 화면에서는 하단 바를 띄우지 않는다. */
-const NO_BAR = ["/register", "/login", "/admin"];
+const NO_BAR = ["/register", "/visit", "/login", "/admin"];
 
 /** 모바일 화면 아래에 붙어 있는 전화·등록 2칸. 641px부터는 스타일에서 숨긴다. */
 export function MobileBar() {
@@ -133,7 +145,7 @@ export function MobileBar() {
   if (NO_BAR.some((p) => path === p || path.startsWith(`${p}/`))) return null;
   return (
     <nav className="ak-mbar" aria-label="빠른 연결">
-      <a href={PROJECT_PHONE_TEL}>전화 상담</a>
+      <a href={PROJECT_PHONE_TEL}>전화상담 {PROJECT_PHONE_DISPLAY}</a>
       <Link to="/register">{REGISTER_LABEL}</Link>
     </nav>
   );

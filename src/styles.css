@@ -5064,6 +5064,8 @@ html[data-om-hd="clear"] .ak-hd__item > a:hover {
 .plan-figure a { display: block; }
 .plan-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--color-line, #e2e2e2); background: #fff; }
 .plan-figure figcaption { margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--color-muted, #555); }
+.plan-figure .plan-figure__price { margin: 4px 0 0; font-size: 15px; font-weight: 700; line-height: 1.5; color: var(--color-forest, #1c3a32); }
+.notice-price-inline { margin: 8px 0 24px; }
 
 /* ── 작업지시서 13 (2026-10-22): 아크원푸르지오.site 기준 통일 ─────────────────────────────
    헤더 → 단계 띠 → 본문. 헤더·하단 바·30만원 팝업·방문예약 페이지 값은 A(www.아크원푸르지오.site) 실측값. */

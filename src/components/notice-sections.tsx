@@ -84,11 +84,20 @@ export const eokMan = (won: number) => {
 
 /** M3 · 공급금액 (입주자모집공고문 6~20면 공급금액표 · 주택형별 최저~최고) */
 export function NoticePrice() {
+  return (
+    <Block label="공급금액" title="주택형별 공급금액 (입주자모집공고 기준)">
+      <PriceContent />
+    </Block>
+  );
+}
+
+/** 공급금액표 본문 — /changeinfo(NoticePrice)와 /overview(주택형 안내, 103㎡A 평면 아래)에서 같이 쓴다. */
+function PriceContent() {
   const rows = NOTICE.prices.map((p) => [p.type, p.units, `${eokMan(p.min)} ~ ${eokMan(p.max)}`]);
   const [l3, l5] = NOTICE.priceLines84A;
   const balcony = NOTICE.balcony;
   return (
-    <Block label="공급금액" title="주택형별 공급금액 (입주자모집공고 기준)">
+    <>
       <Table columns={["주택형", "세대수", "공급금액 (최저 ~ 최고)"]} rows={rows} />
       <div className="notice-lines">
         <p>{`84A는 ${l3.line} 라인 ${eokMan(l3.min)} ~ ${eokMan(l3.max)}, ${l5.line} 라인 ${eokMan(l5.min)} ~ ${eokMan(l5.max)}입니다.`}</p>
@@ -117,7 +126,7 @@ export function NoticePrice() {
           </tbody>
         </table>
       </div>
-    </Block>
+    </>
   );
 }
 
@@ -196,7 +205,8 @@ function UnitFigure({ file, alt }: { file: string; alt: string }) {
 const PLAN_NOTE = "분양 안내 자료의 평면을 다시 그린 안내용 이미지입니다. 실제와 다를 수 있으며 입주자모집공고문과 견본주택이 우선합니다.";
 
 /** 평면 안내도(작업지시서 12 · 3절). 누르면 원본 PNG가 새 창으로 열린다(휴대폰 확대용). */
-function PlanFigure({ name, label }: { name: string; label: string }) {
+function PlanFigure({ name, label, type }: { name: string; label: string; type: string }) {
+  const price = NOTICE.prices.find((p) => p.type === type);
   return (
     <figure className="plan-figure">
       <a href={`/plans/${name}.png`} target="_blank" rel="noopener">
@@ -206,6 +216,7 @@ function PlanFigure({ name, label }: { name: string; label: string }) {
         </picture>
       </a>
       <figcaption>{PLAN_NOTE}</figcaption>
+      {price ? <p className="plan-figure__price">{`${label} 공급금액 ${eokMan(price.min)} ~ ${eokMan(price.max)} (동·층·호별 상이)`}</p> : null}
     </figure>
   );
 }
@@ -220,11 +231,16 @@ export function NoticeTypes() {
       <div className="notice-lines">
         <p>{`총 ${s.total}세대 (특별공급 ${s.special}세대 · 일반공급 ${s.general}세대) · ${s.buildings}개동 · ${s.floors} · 입주 ${s.moveIn}`}</p>
         <p>84㎡C — 4Bay 판상형, 맞통풍 구조, 2면 개방, 팬트리 수납</p>
-        <PlanFigure name="plan-84c-redraw-v2" label="84㎡C" />
+        <PlanFigure name="plan-84c-redraw-v2" label="84㎡C" type="84C" />
         <UnitFigure file="unit-84c-living-ai.webp" alt="84㎡C 거실 인테리어 연출 이미지(AI 제작)" />
         <UnitFigure file="unit-84c-living-kitchen-ai.webp" alt="84㎡C 거실·주방 인테리어 연출 이미지(AI 제작)" />
         <p>103㎡A — 알파룸을 더해 방 4개처럼 쓸 수 있는 구성, 넓은 팬트리, 별도 세탁실</p>
-        <PlanFigure name="plan-103a-redraw-v2" label="103㎡A" />
+        <PlanFigure name="plan-103a-redraw-v2" label="103㎡A" type="103A" />
+        {/* PM 지시(2026-10-22): 103㎡A 평면 바로 아래에 /changeinfo 와 같은 공급금액표 */}
+        <div className="notice-price-inline" aria-label="공급금액">
+          <h3 className="notice-h3">주택형별 공급금액 (입주자모집공고 기준)</h3>
+          <PriceContent />
+        </div>
         <UnitFigure file="unit-103a-alpha-study-ai.webp" alt="103㎡A 알파룸을 서재로 꾸민 인테리어 연출 이미지(AI 제작)" />
         <p>※ 특화 내용은 현장 상품 설명 자료 기준이며 주택형·옵션 선택에 따라 다를 수 있으니 견본주택에서 확인해 주세요.</p>
         <p>견본주택에는 84A·103A 유니트가 설치되어 있습니다.</p>

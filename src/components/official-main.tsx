@@ -486,7 +486,8 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                 <span className="om-hero__role">{ROLE.h1[1]}</span>
               </h1>
               <span className="om-hero__open">
-                <strong>입주자모집공고 게시 · GRAND OPEN 10.30(금)</strong>예정
+                <span className="om-hero__open_seg"><strong>입주자모집공고 게시 10.22(목)</strong>{" ·"}</span>
+                <span className="om-hero__open_seg">견본주택 GRAND OPEN 10.30(금)</span>
               </span>
             </div>
             <div className="om-hero__ui">

@@ -1938,6 +1938,20 @@ html[data-om-hd="clear"] .ak-hd__item > a:hover {
 .om-hero__open strong {
   font-weight: 700;
 }
+/* 작업지시서 11: 구절 단위로만 줄바꿈(「·」 뒤). 좁은 화면에서 두 줄이 돼도 글자가 테두리 안에 있게 높이를 내용에 맞춘다. */
+.om-hero__open {
+  flex-wrap: wrap;
+  column-gap: 0.3em;
+  row-gap: 0.35em;
+  height: auto;
+  min-height: calc(40 * var(--u));
+  padding-block: 0.6em;
+  white-space: normal;
+  text-align: center;
+}
+.om-hero__open_seg {
+  white-space: nowrap;
+}
 .om-hero__ui {
   position: absolute;
   z-index: 6;
@@ -3655,7 +3669,8 @@ html[data-om-hd="clear"] .ak-hd__item > a:hover {
   .om--stage .om-hero__open {
     width: auto; /* 날짜 문구가 길어져 공식 182 고정폭에서 줄바꿈 → 내용 폭(최소 182)으로 */
     min-width: calc(182 * var(--u));
-    height: clamp(38px, 2.6042vw, 50px);
+    height: auto;
+    min-height: clamp(38px, 2.6042vw, 50px);
     margin-top: calc(113 * var(--u) - 26px);
     padding: 0 calc(28 * var(--u));
     border-width: calc(1 * var(--u));

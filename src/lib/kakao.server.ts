@@ -157,3 +157,80 @@ export async function sendStaffAlert(input: AlertInput): Promise<AlertResult> {
     return { status: "failed", detail: `${telegramDetail}network` };
   }
 }
+
+/** 작업지시서 13: 모델하우스 방문예약 관리자 알림. 사전고객등록 알림과 같은 경로(텔레그램 → 문자/알림톡), 제목 앞 「[방문예약]」. */
+export type VisitAlertInput = {
+  receiptNo: string;
+  createdAt: string;
+  name: string;
+  phone: string;
+  visit: string; // 예: 10.30(금) · 오후  /  날짜 미선택(전화 확인) · 시간 상관없음
+  interest: string | null;
+  site: string;
+};
+
+export function visitTelegramText(input: VisitAlertInput): string {
+  // 텔레그램에는 사전고객등록 알림과 같이 고객 이름·번호를 넣지 않는다(관리화면에서 확인).
+  return [
+    `[방문예약] ${SITE_LABEL}`,
+    `접수번호 ${input.receiptNo}`,
+    `방문희망 ${input.visit}`,
+    `관심상품 ${input.interest || "미선택"}`,
+    `사이트 ${input.site}`,
+    input.createdAt,
+    `관리화면 ${SITE_HOST}/admin?visit=${encodeURIComponent(input.receiptNo)}`,
+  ].join("\n");
+}
+
+export async function sendVisitAlert(input: VisitAlertInput): Promise<AlertResult> {
+  let telegramDetail = "";
+  if (!missingTelegramEnv().length) {
+    const token = process.env.TELEGRAM_BOT_TOKEN!.trim();
+    const chatId = process.env.TELEGRAM_CHAT_ID!.trim();
+    const override = process.env.NODE_ENV !== "production" ? process.env.TELEGRAM_API_BASE?.trim() : "";
+    const base = (override || TELEGRAM_API).replace(/\/+$/, "");
+    try {
+      const res = await fetch(`${base}/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ chat_id: chatId, text: visitTelegramText(input), disable_web_page_preview: true }),
+        signal: AbortSignal.timeout(8000),
+      });
+      const body = (await res.json().catch(() => null)) as { ok?: boolean } | null;
+      if (res.ok && body?.ok) return { status: "accepted", detail: "telegram api accepted; handset not verified" };
+      telegramDetail = `telegram http ${res.status}; `;
+    } catch {
+      telegramDetail = "telegram network; ";
+    }
+  }
+  const recipient = staffRecipient();
+  const channel = phoneChannel();
+  if (!recipient || !channel) {
+    if (telegramDetail) return { status: "failed", detail: telegramDetail.replace(/; $/, "") };
+    return { status: "not_configured", detail: !recipient ? "missing KAKAO_ALERT_RECIPIENT" : "no alert channel" };
+  }
+  const text = [
+    `[방문예약] ${SITE_LABEL}`,
+    `접수번호 ${input.receiptNo}`,
+    `${input.name} / ${input.phone}`,
+    `방문희망 ${input.visit}`,
+    `관심상품 ${input.interest || "미선택"}`,
+    `사이트 ${input.site}`,
+    input.createdAt,
+  ].join("\n");
+  if (channel === "sms") {
+    const sms = await sendSms(recipient, text);
+    return { status: sms.ok ? "accepted" : "failed", detail: `${telegramDetail}${sms.detail}` };
+  }
+  try {
+    const res = await fetch(process.env.KAKAO_ALIMTALK_ENDPOINT!.trim(), {
+      method: "POST",
+      headers: { authorization: `Bearer ${process.env.KAKAO_ALIMTALK_AUTHORIZATION!.trim()}`, "content-type": "application/json" },
+      body: JSON.stringify({ templateCode: process.env.KAKAO_TEMPLATE_CODE!.trim(), recipient, siteId: SITE_ID, text }),
+    });
+    if (!res.ok) return { status: "failed", detail: `${telegramDetail}http ${res.status}` };
+    return { status: "accepted", detail: `${telegramDetail}api accepted; handset not verified` };
+  } catch {
+    return { status: "failed", detail: `${telegramDetail}network` };
+  }
+}

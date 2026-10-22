@@ -5064,3 +5064,492 @@ html[data-om-hd="clear"] .ak-hd__item > a:hover {
 .plan-figure a { display: block; }
 .plan-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--color-line, #e2e2e2); background: #fff; }
 .plan-figure figcaption { margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--color-muted, #555); }
+
+/* ── 작업지시서 13 (2026-10-22): 아크원푸르지오.site 기준 통일 ─────────────────────────────
+   헤더 → 단계 띠 → 본문. 헤더·하단 바·30만원 팝업·방문예약 페이지 값은 A(www.아크원푸르지오.site) 실측값. */
+:root {
+  --ak13-primary: #004b45;
+  --ak13-fg: #303030;
+  --ak13-line: #e6e6e6;
+  --ak13-hd: 70px;
+}
+@media (min-width: 1025px) {
+  :root { --ak13-hd: 90px; }
+}
+.ak-hd {
+  border-bottom: 0;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--ak13-primary);
+  font-family: "SUIT", var(--font-sans);
+}
+.ak-hd .ak-wrap.ak-hd__row {
+  width: auto;
+  max-width: none;
+  height: var(--ak13-hd);
+  margin: 0;
+  padding: 0 20px;
+}
+.ak-hd__name {
+  color: var(--ak13-primary);
+  font-family: "SUIT", var(--font-sans);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+.ak-hd__sep,
+.ak-hd__mark,
+.ak-hd .ak-hd__cta,
+.ak-hd__tel small {
+  display: none !important;
+}
+.ak-hd__tel {
+  display: none;
+}
+.ak-hd__mtel {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  place-items: center;
+  border: 1px solid rgba(0, 75, 69, 0.2);
+  border-radius: 50%;
+  color: var(--ak13-primary);
+}
+.ak-hd__menu {
+  width: 40px;
+  margin-left: 0;
+  border: 0;
+  color: var(--ak13-primary);
+}
+.ak-hd__nav {
+  color: var(--ak13-primary);
+  font-size: 16px;
+  font-weight: 500;
+}
+.ak-hd__item > a {
+  padding: 0 6px;
+  line-height: var(--ak13-hd);
+}
+.ak-hd__item > a:hover {
+  color: var(--ak13-primary);
+  opacity: 0.75;
+}
+@media (min-width: 1025px) {
+  .ak-hd .ak-wrap.ak-hd__row {
+    padding: 0 80px;
+  }
+  .ak-hd__name {
+    font-size: 22px;
+  }
+  .ak-hd__tel {
+    display: flex;
+    margin-left: auto;
+    color: var(--ak13-primary);
+    font-family: "SUIT", var(--font-sans);
+    font-size: 26px;
+    font-weight: 700;
+  }
+  .ak-hd__mtel {
+    display: none;
+  }
+}
+@media (min-width: 1200px) {
+  .ak-hd__nav {
+    gap: 6px;
+    margin: 0 auto;
+  }
+  .ak-hd__tel {
+    margin-left: 0;
+  }
+}
+/* 홈: A처럼 히어로 위가 아니라 검은 바탕 위 헤더(흰 글자). 헤더·띠 아래부터 히어로. */
+html[data-om-hd] .ak-hd {
+  background: #000;
+}
+html[data-om-hd] .ak-hd__name,
+html[data-om-hd] .ak-hd__nav,
+html[data-om-hd] .ak-hd__item > a,
+html[data-om-hd] .ak-hd__tel,
+html[data-om-hd] .ak-hd__mtel,
+html[data-om-hd] .ak-hd__menu {
+  color: #fff;
+}
+html[data-om-hd] .ak-hd__mtel {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+html[data-om-hd] .ak-hd__item > a:hover {
+  color: #fff;
+}
+.om {
+  --om-hd: var(--ak13-hd);
+}
+.om-hero {
+  margin-top: 0;
+  --vh: calc(var(--om-vh, 100svh) - var(--ak13-hd) - var(--ak-band-h, 0px));
+}
+.ak-phase-band-slot {
+  position: relative;
+  z-index: 39;
+}
+
+/* 하단 고정 바(휴대폰) — A .quick-mo 값 */
+.ak-mbar {
+  border-top: 0;
+  background: var(--ak13-primary);
+}
+.ak-mbar a,
+.ak-mbar a + a {
+  height: 56px;
+  background: transparent;
+  color: #fff;
+  font-family: "SUIT", var(--font-sans);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* 30만원 팝업 — A prereg-popup 값 */
+.prereg-pop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "SUIT", var(--font-sans);
+}
+.prereg-pop__bg {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(48, 48, 48, 0.55);
+}
+.prereg-pop__panel {
+  position: relative;
+  width: min(480px, calc(100% - 32px));
+  max-height: calc(100vh - 32px);
+  margin: auto;
+  overflow-y: auto;
+  padding: 32px;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ak13-fg);
+  font-size: 16px;
+  line-height: 24px;
+  text-align: left;
+}
+.prereg-pop__panel p,
+.prereg-pop__panel a,
+.prereg-pop__panel button {
+  color: var(--ak13-fg);
+}
+.prereg-pop__panel h2 {
+  margin: 4px 0 12px;
+  color: var(--ak13-primary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+.prereg-pop .reg__submit {
+  display: flex;
+  height: 60px;
+  margin: 12px 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--ak13-primary);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.prereg-pop .prereg-fine {
+  font-size: 13px;
+  line-height: 19.5px;
+}
+.prereg-pop__x {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+}
+.prereg-pop__actions {
+  display: flex;
+  margin: 16px -32px -32px;
+  border-top: 1px solid var(--ak13-line);
+}
+.prereg-pop__actions button {
+  flex: 1;
+  height: 48px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+body.prereg-lock {
+  overflow: hidden;
+}
+@media (max-width: 600px) {
+  .prereg-pop {
+    align-items: flex-end;
+  }
+  .prereg-pop__panel {
+    width: 100%;
+    max-height: 85vh;
+    margin: 0;
+    border-radius: 8px 8px 0 0;
+  }
+}
+.prereg-strip {
+  display: none;
+}
+@media (max-width: 767px) {
+  .prereg-strip {
+    position: fixed;
+    z-index: 1040;
+    right: 0;
+    bottom: calc(56px + env(safe-area-inset-bottom));
+    left: 0;
+    display: flex;
+    height: 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 4px 0 14px;
+    background: #8b7f71;
+    color: #fff;
+    font-family: "SUIT", var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .prereg-strip__txt {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .prereg-strip__more {
+    flex: none;
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+  }
+  .prereg-strip__x {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 16px;
+  }
+}
+
+/* 사전고객등록 페이지: 방문예약 안내 카드 */
+.reg-visit-card {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--ak13-line);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.reg-visit-card__go {
+  color: var(--ak13-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 방문예약 페이지(/visit) — A 등록 페이지 서식 */
+.vr {
+  max-width: 500px;
+  margin: 0 auto;
+  color: var(--ak13-fg);
+  font-family: "SUIT", var(--font-sans);
+}
+.vr__title {
+  color: var(--ak13-primary);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.vr__desc {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.vr__loc {
+  margin-top: 8px;
+  color: var(--ak13-primary);
+  font-size: 15px;
+  font-weight: 700;
+}
+.vr__form {
+  margin-top: 24px;
+}
+.vr__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.vr__field {
+  display: block;
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+}
+.vr__label {
+  display: block;
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+.vr__label em {
+  color: var(--ak13-primary);
+  font-style: normal;
+}
+.vr__label small {
+  font-weight: 400;
+}
+.vr__field input:not([type="radio"]),
+.vr__field select {
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ak13-fg);
+  font: inherit;
+  font-size: 16px;
+}
+.vr__opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.vr__opt {
+  display: inline-flex;
+  min-height: 48px;
+  flex: 1 1 120px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+.vr__opt input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--ak13-primary);
+}
+.vr__off {
+  margin: 0 0 20px;
+  padding: 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background: #fff;
+}
+.vr__tel {
+  display: flex;
+  height: 48px;
+  margin-top: 10px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ak13-primary);
+  border-radius: 8px;
+  color: var(--ak13-primary);
+  font-weight: 700;
+}
+.vr__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.vr__consent input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  flex: none;
+  accent-color: var(--ak13-primary);
+}
+.vr__consent_detail {
+  display: block;
+  margin-top: 4px;
+  color: #666;
+  font-size: 13px;
+}
+.vr__error {
+  margin-top: 12px;
+  color: #c62828;
+  font-size: 14px;
+}
+.vr__submit {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ak13-primary);
+  color: #fff;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.vr__submit:disabled {
+  opacity: 0.6;
+}
+.vr__done {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background: #fff;
+}
+.vr__done_h {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.vr__done_no {
+  margin-top: 8px;
+  font-size: 15px;
+}
+.vr__notes {
+  margin-top: 24px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #555;
+}
+.vr__notes p + p {
+  margin-top: 4px;
+}
+.vr__link {
+  color: var(--ak13-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

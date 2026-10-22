@@ -221,6 +221,52 @@ function PlanFigure({ name, label, type }: { name: string; label: string; type: 
   );
 }
 
+/** 면적대(84·103) 최저~최고 — 주택형별 값에서 계산(84A~84D, 103A·103B). */
+function rangeOf(prefix: string) {
+  const list = NOTICE.prices.filter((p) => p.type.startsWith(prefix));
+  return `${eokMan(Math.min(...list.map((p) => p.min)))} ~ ${eokMan(Math.max(...list.map((p) => p.max)))}`;
+}
+
+/** PM 지시(2026-10-22): 홈 히어로 바로 아래 배너. 배너 전체가 /plans 로 간다. */
+export function PlansBanner() {
+  return (
+    <section id="plans" className="om-plans" aria-labelledby="om-plans-title">
+      <a href="/plans" className="om-plans__card">
+        <div className="om-plans__text">
+          <h2 id="om-plans-title" className="om-plans__title">평면도 · 공급금액</h2>
+          <p className="om-plans__sub">84㎡C · 103㎡A 평면도와 주택형별 공급금액 (입주자모집공고 기준)</p>
+          <p className="om-plans__price">
+            <span className="om-plans__nb">{`84㎡ ${rangeOf("84")}`}</span>{" · "}
+            <span className="om-plans__nb">{`103㎡ ${rangeOf("103")}`}</span>{" "}
+            <span className="om-plans__nb">(동·층·호별 상이, 발코니 확장 등 별도)</span>
+          </p>
+          <span className="om-plans__btn">평면도·공급금액 보기 →</span>
+        </div>
+        <div className="om-plans__figs">
+          <div className="om-plans__thumbs">
+            <img src="/plans/plan-84c-redraw-v2.webp" alt="청라 아크원 푸르지오 84㎡C 평면 안내도" width={1600} height={1000} loading="lazy" decoding="async" />
+            <img src="/plans/plan-103a-redraw-v2.webp" alt="청라 아크원 푸르지오 103㎡A 평면 안내도" width={1600} height={1000} loading="lazy" decoding="async" />
+          </div>
+          <p className="om-plans__note">{PLAN_NOTE}</p>
+        </div>
+      </a>
+    </section>
+  );
+}
+
+/** PM 지시(2026-10-22): /plans 「평면·분양가」 — 평면 2장(가격 한 줄 포함) 바로 아래 공급금액표. */
+export function NoticePlansPrice() {
+  return (
+    <>
+      <section className="ak-wrap ak-page notice-block plans-figs" aria-label="평면도">
+        <PlanFigure name="plan-84c-redraw-v2" label="84㎡C" type="84C" />
+        <PlanFigure name="plan-103a-redraw-v2" label="103㎡A" type="103A" />
+      </section>
+      <NoticePrice />
+    </>
+  );
+}
+
 /** M7 · 주택형 안내 (면적 단위 ㎡) + 타입 연출 이미지 5종 */
 export function NoticeTypes() {
   const s = NOTICE.supply;

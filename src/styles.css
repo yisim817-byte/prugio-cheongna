@@ -5060,3 +5060,7 @@ html[data-om-hd="clear"] .ak-hd__item > a:hover {
 .unit-figure { margin: 12px 0 24px; }
 .unit-figure img { display: block; width: 100%; height: auto; }
 .unit-figure figcaption { margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--color-muted, #555); }
+.plan-figure { margin: 12px 0 24px; }
+.plan-figure a { display: block; }
+.plan-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--color-line, #e2e2e2); background: #fff; }
+.plan-figure figcaption { margin-top: 6px; font-size: 13px; line-height: 1.5; color: var(--color-muted, #555); }

@@ -1,7 +1,7 @@
 export const SITE_ID = "prugio-cheongna";
 export const SITE_ORIGIN = "https://www.xn--oi2b90bo0vusdbte57o.site";
-export const OFFICIAL = "https://arkone-prugio.com";
-export const img = (path: string) => `${OFFICIAL}${encodeURI(path)}`;
+/** 사업주체 공개 이미지는 이 사이트 public/ 아래 같은 경로로 보관한다(작업지시서 12 · 외부 주소 의존 없음). */
+export const img = (path: string) => encodeURI(path);
 
 export const PROJECT_PHONE_DISPLAY = "1666-6799";
 export const PROJECT_PHONE_TEL = "tel:16666799";

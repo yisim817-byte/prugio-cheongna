@@ -22,7 +22,7 @@ function Page() {
             >
               <Photo
                 src={place.map}
-                alt={`${place.title} 약도`}
+                alt={place.title === "홍보관" ? "홍보관 말풍선이 있는 약도" : "현장과 견본주택이 함께 표시된 약도"}
                 className="h-48 w-full object-cover"
               />
               <div>

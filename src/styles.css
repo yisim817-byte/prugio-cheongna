@@ -5717,7 +5717,7 @@ body.prereg-lock {
   .oe-tabs small { display: block; margin-top: 2px; font-size: 12px; font-weight: 500; }
   .oe-draw-grid { display: block; }
   .oe-draw-col__h { display: none; }
-  .oe-draw-col[hidden] { display: none; }
+  .oe-draw-col.is-off { display: none; }
 }
 @media (max-width: 767px) {
   .oe-hero { padding: 56px 16px; }
@@ -5735,6 +5735,3 @@ body.prereg-lock {
   .oe-cards { display: none; }
 }
 
-@media (min-width: 1080px) {
-  .oe-draw-col[hidden] { display: block !important; }
-}

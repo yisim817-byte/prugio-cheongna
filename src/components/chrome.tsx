@@ -44,6 +44,9 @@ export function Header() {
             <Link to="/register">{REGISTER_LABEL}</Link>
           </div>
           <div className="ak-hd__item">
+            <Link to="/event">이벤트</Link>
+          </div>
+          <div className="ak-hd__item">
             <Link to="/visit">방문예약</Link>
           </div>
         </nav>
@@ -87,6 +90,7 @@ export function Header() {
             })}
             <div className="ak-hd__group">
               <Link to="/register" onClick={() => setOpen(false)}>{REGISTER_LABEL}</Link>
+              <Link to="/event" onClick={() => setOpen(false)}>이벤트</Link>
               <Link to="/visit" onClick={() => setOpen(false)}>방문예약</Link>
             </div>
           </div>
@@ -127,6 +131,7 @@ export function Footer() {
           <div className="ak-ft__links">
             <Link to="/privacy">개인정보처리방침</Link>
             <Link to="/register">{REGISTER_LABEL}</Link>
+            <Link to="/event">이벤트</Link>
             <Link to="/visit">모델하우스 방문예약</Link>
             <Link to="/login" rel="nofollow">관리자 로그인</Link>
           </div>

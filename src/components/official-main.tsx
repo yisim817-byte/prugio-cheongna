@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { OtFeature } from "@/components/ot-official";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PLACES, img } from "@/data/content";
 import { REGISTER_LABEL } from "@/data/labels";
@@ -489,7 +490,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                 <span className="om-hero__role">{ROLE.h1[1]}</span>
               </h1>
               <span className="om-hero__open">
-                <span className="om-hero__open_seg"><strong>입주자모집공고 게시 10.22(목)</strong>{" ·"}</span>
+                <span className="om-hero__open_seg"><strong>오피스텔 · 상가 11월말 분양예정</strong>{" ·"}</span>
                 <span className="om-hero__open_seg">견본주택 별도 공지 시까지 운영</span>
               </span>
             </div>
@@ -553,6 +554,9 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
 
       {/* ── 평면도·공급금액 배너 (PM 지시 2026-10-22, 상세는 /plans) ── */}
       <PlansBanner />
+
+      {/* 2026-11-10 PM 지시: 히어로 바로 아래 공식 오피스텔·상업시설 안내 화면 2장 */}
+      <OtFeature />
 
       {/* ── 3·4 사업개요 ───────────────────────────────────────────── */}
       <section id="overview" className={`om-s om-overview${active("overview")}`} data-step={step("overview")} aria-labelledby="om-overview-title">

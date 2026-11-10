@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, Phone, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { NAV, PROJECT_PHONE_DISPLAY, PROJECT_PHONE_TEL } from "@/data/content";
 import { PROJECT_NAME, REGISTER_LABEL } from "@/data/labels";
 import { SEO_FAQS, SEO_PAGES } from "@/data/seo";
@@ -13,7 +13,8 @@ import { SEO_FAQS, SEO_PAGES } from "@/data/seo";
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const menu = NAV.filter((item) => item.href !== "/register");
+  // 작업지시서 13: 헤더는 아크원푸르지오.site(A)와 같은 모양 — 사전고객등록·방문예약도 메뉴 글자로 둔다(버튼 없음).
+  const menu = NAV;
   return (
     <header className="ak-hd">
       <div className="ak-wrap ak-hd__row">
@@ -39,24 +40,14 @@ export function Header() {
               ) : null}
             </div>
           ))}
-          {/* 작업지시서 13: 아크원푸르지오.site와 같이 사전고객등록은 메뉴 글자로, 그 옆에 방문예약 */}
-          <div className="ak-hd__item">
-            <Link to="/register">{REGISTER_LABEL}</Link>
-          </div>
-          <div className="ak-hd__item">
-            <Link to="/event">이벤트</Link>
-          </div>
-          <div className="ak-hd__item">
-            <Link to="/visit">방문예약</Link>
-          </div>
         </nav>
+        <a href="#popup_soon_commercial" className="ak-hd__commercial" data-popup-soon="commercial" aria-haspopup="dialog">
+          근린생활시설
+        </a>
         <a href={PROJECT_PHONE_TEL} className="ak-hd__tel ak-num">
-          <small>상담</small>
           {PROJECT_PHONE_DISPLAY}
         </a>
-        <a href={PROJECT_PHONE_TEL} className="ak-hd__mtel" aria-label={`전화 상담 ${PROJECT_PHONE_DISPLAY}`}>
-          <Phone size={14} aria-hidden="true" />
-        </a>
+        <a href={PROJECT_PHONE_TEL} className="ak-hd__mtel" aria-label={`전화 상담 ${PROJECT_PHONE_DISPLAY}`} />
         <button
           type="button"
           className="ak-hd__menu"
@@ -88,11 +79,12 @@ export function Header() {
                 </div>
               );
             })}
-            <div className="ak-hd__group">
-              <Link to="/register" onClick={() => setOpen(false)}>{REGISTER_LABEL}</Link>
-              <Link to="/event" onClick={() => setOpen(false)}>이벤트</Link>
-              <Link to="/visit" onClick={() => setOpen(false)}>방문예약</Link>
-            </div>
+            <a href="#popup_soon_officetel" data-popup-soon="officetel" aria-haspopup="dialog" onClick={() => setOpen(false)}>
+              오피스텔 오픈예정
+            </a>
+            <a href="#popup_soon_commercial" className="ak-hd__commercial" data-popup-soon="commercial" aria-haspopup="dialog" onClick={() => setOpen(false)}>
+              근린생활시설
+            </a>
           </div>
         </div>
       ) : null}
@@ -131,8 +123,6 @@ export function Footer() {
           <div className="ak-ft__links">
             <Link to="/privacy">개인정보처리방침</Link>
             <Link to="/register">{REGISTER_LABEL}</Link>
-            <Link to="/event">이벤트</Link>
-            <Link to="/visit">모델하우스 방문예약</Link>
             <Link to="/login" rel="nofollow">관리자 로그인</Link>
           </div>
         </div>
@@ -142,7 +132,7 @@ export function Footer() {
 }
 
 /** 등록·로그인·관리 화면에서는 하단 바를 띄우지 않는다. */
-const NO_BAR = ["/register", "/visit", "/login", "/admin"];
+const NO_BAR = ["/register", "/login", "/admin"];
 
 /** 모바일 화면 아래에 붙어 있는 전화·등록 2칸. 641px부터는 스타일에서 숨긴다. */
 export function MobileBar() {

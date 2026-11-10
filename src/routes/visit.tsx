@@ -89,7 +89,7 @@ function Page() {
         <div className="vr">
           <h2 className="vr__title">모델하우스 방문예약</h2>
           <p className="vr__desc">방문 희망 날짜를 남겨 주시면, 담당자가 확인 후 방문 시간을 전화로 안내해 드립니다.</p>
-          <p className="vr__loc">견본주택 위치 · 인천광역시 서해구 청라동 87-1 · GRAND OPEN 10.30(금)</p>
+          <p className="vr__loc">견본주택 위치 · 인천광역시 서해구 청라동 87-1 · 별도 공지 시까지 운영</p>
           {done ? (
             <div className="vr__done" role="status">
               <p className="vr__done_h">
@@ -151,10 +151,7 @@ function Page() {
               <label className="vr__consent">
                 <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
                 <span>
-                  <strong>개인정보 수집·이용 동의(필수)</strong>
-                  <span className="vr__consent_detail">
-                    수집항목: 이름, 휴대폰번호, 방문 희망일·시간대, 관심 상품(자동 수집: 서비스 이용 기록, 접속 로그, 쿠키, 접속 IP 정보, 불량이용 기록, 기기정보) / 이용목적: 견본주택 방문 일정 안내, 청라 아크원 푸르지오 분양정보 제공 및 마케팅 활용(마케팅 활용은 광고성 정보 수신에 동의한 경우에 한함) / 보유기간: 사전고객등록과 같은 기간(분양 종료 시 파기) ·{" "}
-                    <Link to="/privacy" className="underline">처리방침</Link>
+                  <b>[필수] 개인정보 수집·이용에 동의합니다.</b><span className="vr__consent_detail"><span className="mt-1 block font-medium">개인정보 수집·이용 안내</span><span className="mt-1 block text-[13px] leading-5">청라 아크원 푸르지오 분양 상담 담당은 견본주택 방문예약 접수 및 안내를 위하여 다음과 같이 개인정보를 수집·이용합니다.</span><span className="mt-1 block text-[13px] leading-5">1. 개인정보 수집·이용 주체 : 청라 아크원 푸르지오 분양 상담 담당(문의 {PROJECT_PHONE_DISPLAY})</span><span className="mt-1 block text-[13px] leading-5">2. 개인정보 수집·이용 항목 : 이름, 휴대폰번호, 방문 희망일·시간대, 관심 상품 / (자동 수집) 서비스 이용 기록, 접속 로그, 쿠키, 접속 IP 정보, 불량이용 기록, 기기정보</span><span className="mt-1 block text-[13px] leading-5">3. 개인정보 수집·이용 목적 : 견본주택 방문 일정 안내, 청라 아크원 푸르지오 분양정보 제공 및 마케팅 활용(마케팅 활용은 광고성 정보 수신에 동의한 경우에 한함)</span><span className="mt-1 block text-[13px] leading-5">4. 개인정보 보유·이용 기간 : 사전고객등록과 같은 기간(분양 종료 시 파기)이며, 동의 철회 또는 이용 목적 달성 시에도 지체 없이 파기합니다.</span><span className="mt-1 block text-[13px] leading-5">5. 개인정보 처리 위탁 및 제공 : 등록 사실을 이 사이트 담당자에게 알리는 경우 외에는 제3자에게 제공하지 않습니다.</span><span className="mt-1 block text-[13px] leading-5">6. 동의 거부 권리 : 고객님께서는 개인정보 수집·이용 동의를 거부하실 수 있으며, 거부하실 경우 방문예약 신청이 제한됩니다. 전화 예약({PROJECT_PHONE_DISPLAY})은 동의 없이 이용하실 수 있습니다.</span> <Link to="/privacy" className="underline">처리방침</Link>
                   </span>
                 </span>
               </label>

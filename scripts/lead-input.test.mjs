@@ -1,19 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { leadSchema } from '../src/lib/lead-input.ts';
-const minimal = {mode:'interest',name:'프리뷰검수',phone:'01000000000',consent:true};
-test('interest form accepts only name phone consent without fabricating identity fields',()=>{
+const minimal = {mode:'prereg',product:'officetel',name:'검수전용',phone:'01000000001',birth6:'900101',consent:true,age14:true};
+test('new registration requires product and birth, with optional collapsed address',()=>{
   const parsed=leadSchema.parse(minimal);
-  assert.equal(parsed.product,undefined);
-  for(const key of ['birth6','sido','sigungu','dong']) assert.equal(parsed[key],'');
+  assert.equal(parsed.product,'officetel');
+  assert.equal(parsed.birth6,'900101');
+  for(const key of ['sido','sigungu','dong']) assert.equal(parsed[key],'');
+  assert.equal(leadSchema.parse({...minimal,sido:'인천광역시',sigungu:'서해구',dong:'청라동'}).dong,'청라동');
 });
-test('interest form refuses extra birth and address data',()=>{
-  assert.equal(leadSchema.safeParse({...minimal,birth6:'730101'}).success,false);
+test('missing, malformed or overlong birth digits are refused',()=>{
+  for(const birth6 of [undefined,'','90010','9001011','9001A1','901301']) assert.equal(leadSchema.safeParse({...minimal,birth6}).success,false);
 });
-test('full existing registration retains product, birth, address validation',()=>{
+test('legacy full form retains address requirements',()=>{
   assert.equal(leadSchema.safeParse({...minimal,mode:'full'}).success,false);
-  assert.equal(leadSchema.safeParse({...minimal,mode:'full',product:'apt',birth6:'730101',sido:'인천광역시',sigungu:'서해구',dong:'청라동'}).success,true);
+  assert.equal(leadSchema.safeParse({...minimal,mode:'full',sido:'인천광역시',sigungu:'서해구',dong:'청라동'}).success,true);
 });
-test('refused consent, invalid product and oversized name rejected',()=>{
-  for(const variant of [{consent:false},{product:'unexpected'},{name:'가'.repeat(21)}]) assert.equal(leadSchema.safeParse({...minimal,...variant}).success,false);
+test('required consent, age confirmation and product cannot be bypassed',()=>{
+  for(const variant of [{consent:false},{age14:undefined},{age14:false},{product:undefined},{product:null},{product:'unexpected'},{name:'가'.repeat(21)}]) assert.equal(leadSchema.safeParse({...minimal,...variant}).success,false);
 });

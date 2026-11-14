@@ -1,15 +1,14 @@
 /* 상단 띠: 103㎡B 선착순 참여의향서 접수 안내 (2026-11-13 작업지시서 17). 이전 내용 = 평면도 공개 띠(2026-10-31). 파일 이름·요소 id·높이는 그대로 둔다. */
 (function () {
   'use strict';
-  // The new home includes its own notice link; preserve this bar on other pages.
-  if (location.pathname === '/') return;
   if (window.__planOpenBar) return; window.__planOpenBar = 1;
   if (/register|prereg|admin|login/i.test(location.pathname)) return;
   var KEY = 'b103BarClosed_20261113';
   try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
   var s = document.currentScript;
   var HREF = (s && s.getAttribute('data-b103-href')) || '/103b';
-  var H = 38;
+  var isHome = location.pathname === '/';
+  var H = isHome && window.matchMedia('(max-width:480px)').matches ? 58 : 38;
   function run() {
     if (document.getElementById('plan-open-bar')) return;
     var css = document.createElement('style');
@@ -20,11 +19,12 @@
       '#plan-open-bar .pob-go{text-decoration:underline;text-underline-offset:3px}' +
       '#plan-open-bar button{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:#fff;font-size:20px;line-height:1;width:32px;height:32px;cursor:pointer;opacity:.8}' +
       '@media(max-width:480px){#plan-open-bar{font-size:12.5px}#plan-open-bar .pob-tag{font-size:11px;padding:2px 5px}#plan-open-bar a.pob-link{padding:0 36px 0 10px}#plan-open-bar .pob-types{display:none}}' +
+      '@media(max-width:480px){#plan-open-bar[data-home=true] a.pob-link{display:block;text-align:center;white-space:normal;line-height:1.65;font-size:11px}#plan-open-bar[data-home=true] .pob-types{display:inline}#plan-open-bar[data-home=true] .pob-tag{display:inline-block}}' +
       'html.pob-on body{padding-top:' + H + 'px!important}';
     document.head.appendChild(css);
     var bar = document.createElement('div');
-    bar.id = 'plan-open-bar'; bar.setAttribute('role', 'region'); bar.setAttribute('aria-label', '103㎡B 선착순 참여의향서 접수 안내');
-    bar.innerHTML = '<a class="pob-link" href="' + HREF + '"><span class="pob-tag">103㎡B 선착순</span><span class="pob-types">참여의향서 11.17(화)부터 견본주택 접수</span><span class="pob-go">접수 안내 보기 ›</span></a><button type="button" aria-label="닫기">×</button>';
+    bar.id = 'plan-open-bar'; bar.dataset.home = String(isHome); bar.setAttribute('role', 'region'); bar.setAttribute('aria-label', '103㎡B 선착순 참여의향서 접수 안내');
+    bar.innerHTML = '<a class="pob-link" href="' + HREF + '" aria-label="103㎡B 선착순 · 참여의향서 11.17(화)부터 견본주택 접수 · 접수 안내 보기 ›"><span class="pob-tag">103㎡B 선착순</span> · <span class="pob-types">참여의향서 11.17(화)부터 견본주택 접수</span> · <span class="pob-go">접수 안내 보기 ›</span></a><button type="button" aria-label="닫기">×</button>';
     document.documentElement.appendChild(bar);
     document.documentElement.classList.add('pob-on');
     var moved = [];

@@ -28,7 +28,7 @@ const HISTORY_EVENTS: { key: string; year: string; tbd?: boolean; file: string; 
   { key: "2026", year: "2026", file: "history_img_2026.v4.jpg", alt: "하나드림타운 조감도", captions: [["청라하늘대교", "(개통)"], ["하나드림타운", "(준공·개관)"]] },
   { key: "2028", year: "2028", file: "history_img_2028.v4.jpg", alt: "돔구장과 스타필드 청라 공사 현장", captions: [["돔구장&스타필드 청라", "(개장 예정)"]] },
   { key: "2029", year: "2029", file: "history_img_2029.v4.jpg", alt: "서울아산청라병원 조감도", captions: [["서울아산청라병원", "(예정)"]] },
-  { key: "2030", year: "시기 미정", tbd: true, file: "history_img_2030.v4.jpg", alt: "7호선 국제업무단지역 예정지", captions: [["7호선 국제업무단지역", "(예정 · 개통 시기 미정)"]] },
+  { key: "2030", year: "시기 미정", tbd: true, file: "history_img_2030.v4.jpg", alt: "서울 7호선 청라연장선 — 건설 중 · 개통시기 미정", captions: [["서울 7호선 청라연장선 — 건설 중 · 개통시기 미정", ""]] },
   { key: "2031", year: "2031", file: "history_img_2031.v4.jpg", alt: "영상문화복합단지 조감도", captions: [["영상문화복합단지", "(계획)"]] },
   { key: "ark_one", year: "2031.08", file: "history_img_ark_one.v4.jpg", alt: "청라 아크원 푸르지오 투시도", captions: [["청라 아크원 푸르지오", "(2031년 08월 입주 예정)"]] },
 ];
@@ -663,7 +663,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
             <img className="om-location__visual_image" src={"/assets/opt/location_img.v4.webp" /* orig /resources/img/pages/main/location_img.v4.png */} alt="청라 아크원 푸르지오 입지환경 이미지" loading="lazy" />
             <p className="mk-dock">
               <span className="mk-eye">입지</span>
-              <strong>청라하늘대교는 2026.01.05 개통. 7호선은 개통 시기 미정.</strong>
+              <strong>청라하늘대교는 2026.01.05 개통. 서울 7호선 청라연장선 — 건설 중 · 개통시기 미정.</strong>
               <span className="mk-links">
                 <Link to="/location">입지환경</Link>
                 <a href="#premium">프리미엄 이어서</a>

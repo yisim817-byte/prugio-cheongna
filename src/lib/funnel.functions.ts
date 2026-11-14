@@ -14,6 +14,7 @@ const eventSchema = z.object({
 export const recordFunnel = createServerFn({ method: "POST" })
   .validator((raw: unknown) => eventSchema.parse(raw))
   .handler(async ({ data }) => {
+    if (process.env.VERCEL_ENV === "preview") return { ok: false as const, stored: false as const };
     if (dbSource !== "neon") return { ok: false as const, stored: false as const };
     const path = (data.path && data.path.startsWith("/") && !data.path.includes("://") ? data.path : "/").slice(0, 120);
     try {

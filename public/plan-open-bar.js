@@ -1,6 +1,8 @@
 /* 상단 띠: 103㎡B 선착순 참여의향서 접수 안내 (2026-11-13 작업지시서 17). 이전 내용 = 평면도 공개 띠(2026-10-31). 파일 이름·요소 id·높이는 그대로 둔다. */
 (function () {
   'use strict';
+  // The new home includes its own notice link; preserve this bar on other pages.
+  if (location.pathname === '/') return;
   if (window.__planOpenBar) return; window.__planOpenBar = 1;
   if (/register|prereg|admin|login/i.test(location.pathname)) return;
   var KEY = 'b103BarClosed_20261113';

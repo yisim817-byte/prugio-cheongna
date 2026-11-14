@@ -8,20 +8,7 @@ import { checkVisit } from "@/lib/visit.server";
 
 const SITE = SITE_ID;
 
-const leadSchema = z.object({
-  product: z.enum(["apt","officetel","commercial"]),
-  name: z.string().trim().min(2).max(20),
-  phone: z.string().trim(),
-  birth6: z.string().trim(),
-  sido: z.string().trim().min(2).max(20),
-  sigungu: z.string().trim().min(2).max(20),
-  dong: z.string().trim().min(1).max(20),
-  consent: z.literal(true),
-  entry: z.string().trim().max(80).optional(),
-  // 작업지시서 9: 모델하우스 방문 희망일(선택). 없으면 종전과 같다.
-  visit_date: z.string().trim().max(10).optional(),
-  visit_slot: z.string().trim().max(3).optional(),
-});
+import { leadSchema } from "@/lib/lead-input";
 
 function digits(value: string) {
   return value.replace(/\D/g, "");
@@ -31,12 +18,6 @@ function validPhone(value: string) {
   return /^010\d{8}$/.test(value);
 }
 
-function validBirth(value: string) {
-  if (!/^\d{6}$/.test(value)) return false;
-  const month = Number(value.slice(2, 4));
-  const day = Number(value.slice(4, 6));
-  return month >= 1 && month <= 12 && day >= 1 && day <= 31;
-}
 
 function entryPath(value: string | undefined) {
   if (!value || !value.startsWith("/") || value.includes("://") || value.includes("\\")) return "/register";
@@ -80,7 +61,10 @@ export const submitLead = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const phone = digits(data.phone);
     if (!validPhone(phone)) return { ok: false as const, error: "휴대전화는 010으로 시작하는 11자리입니다." };
-    if (!validBirth(data.birth6)) return { ok: false as const, error: "생년월일은 앞 6자리(YYMMDD)만 입력합니다." };
+    // Preview requests must never write to the live store or send staff notifications.
+    if ((process.env.VERCEL_ENV === "preview" || (dbSource !== "neon" && process.env.NODE_ENV !== "production"))) {
+      return { ok: false as const, preview: true as const, error: "프리뷰 전송 검증을 마쳤습니다. 실제 접수 저장·접수번호 발급·알림 발송은 하지 않았습니다." };
+    }
     if (dbSource !== "neon") {
       console.error("[leads] durable store unavailable");
       if (process.env.VERCEL_ENV === "production") {
@@ -112,7 +96,7 @@ export const submitLead = createServerFn({ method: "POST" })
       `;
       if (existing[0]) {
         // R21: 같은 번호 재접수 시 등록 상품만 최신 값으로 갱신(나머지 항목·접수번호 불변)
-        await sql`update leads set product = ${data.product} where site_id = ${SITE} and phone = ${phone}`;
+        if (data.product) await sql`update leads set product = ${data.product} where site_id = ${SITE} and phone = ${phone}`;
         visitSaved = await saveVisit(sql);
         return {
           ok: true as const,
@@ -131,7 +115,7 @@ export const submitLead = createServerFn({ method: "POST" })
       const entry = entryPath(data.entry);
       await sql`
         insert into leads (site_id, receipt_no, name, phone, birth6, sido, sigungu, dong, entry_path, notify_status, product)
-        values (${SITE}, ${receipt}, ${data.name}, ${phone}, ${data.birth6}, ${data.sido}, ${data.sigungu}, ${data.dong}, ${entry}, 'pending', ${data.product})
+        values (${SITE}, ${receipt}, ${data.name}, ${phone}, ${data.birth6}, ${data.sido}, ${data.sigungu}, ${data.dong}, ${entry}, 'pending', ${data.product ?? null})
       `;
       visitSaved = await saveVisit(sql);
     } catch {

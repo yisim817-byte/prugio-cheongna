@@ -1,0 +1,92 @@
+{
+  "checkedAt": "2026-11-14",
+  "scope": "preview only; www.xn--oi2b90bo0vusdbte57o.site",
+  "deployment": {
+    "id": "dpl_GXpC6rimdgopVwXFfAxibfQ37rAh",
+    "name": "prugio-cheongna",
+    "url": "prugio-cheongna-cjf31hv4i-yisim817-6215s-projects.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1794632291889,
+    "creator": {
+      "uid": "biNg1MsZIeY1mdzJtwgb3weZ",
+      "username": "yisim817-6215"
+    },
+    "project": {
+      "id": "prj_R9EQQJnJ2BHfRR7mMO4FZOW0DoMi",
+      "name": "prugio-cheongna",
+      "framework": "tanstack-start"
+    },
+    "meta": {
+      "githubCommitRef": "feat/ot-commercial-v2-20261110",
+      "githubCommitSha": "fe1ecd52918ebcaae59327e0dfb292eb0f2868e6",
+      "githubCommitMessage": "홈 마케팅 흐름 재구성 (미리보기, 운영 미배포)\n\n주제목은 사업명과 주거명작으로 두고, 상품 이해 뒤에 상담·사전등록이 나오게 한다.\n사업개요·입지·프리미엄에 사실 문구와 다음 안내를 붙인다.\n대표번호, 접수 경로, 11월 13일 팝업과 /103b는 유지한다.",
+      "githubRepo": "prugio-cheongna",
+      "githubOrg": "yisim817-byte"
+    },
+    "alias": [
+      "prugio-cheongna.vercel.app",
+      "www.xn--oi2b90bo0vusdbte57o.site",
+      "xn--oi2b90bo0vusdbte57o.site",
+      "prugio-cheongna-yisim817-6215s-projects.vercel.app",
+      "prugio-cheongna-git-feat-ot-comm-561f9d-yisim817-6215s-projects.vercel.app"
+    ],
+    "target": "production",
+    "regions": [
+      "iad1"
+    ],
+    "buildingAt": 1794632293219,
+    "ready": 1794632308155,
+    "readyState": "READY",
+    "aliasError": null
+  },
+  "project": {
+    "id": "prj_R9EQQJnJ2BHfRR7mMO4FZOW0DoMi",
+    "name": "prugio-cheongna",
+    "framework": "tanstack-start",
+    "accountId": "team_gdpDciqMqKDlggM0z5Skpp8M",
+    "createdAt": 1790928577184,
+    "updatedAt": 1794632308421,
+    "nodeVersion": "24.x",
+    "latestDeployment": {
+      "id": "dpl_GXpC6rimdgopVwXFfAxibfQ37rAh",
+      "url": "prugio-cheongna-cjf31hv4i-yisim817-6215s-projects.vercel.app",
+      "createdAt": 1794632291889,
+      "readyState": "READY",
+      "target": "production"
+    },
+    "domains": [
+      "prugio-cheongna.vercel.app",
+      "www.xn--oi2b90bo0vusdbte57o.site",
+      "xn--oi2b90bo0vusdbte57o.site",
+      "prugio-cheongna-yisim817-6215s-projects.vercel.app",
+      "prugio-cheongna-git-feat-ot-comm-561f9d-yisim817-6215s-projects.vercel.app"
+    ],
+    "passwordProtection": {
+      "enabled": false,
+      "deploymentType": null
+    },
+    "ssoProtection": {
+      "enabled": true,
+      "deploymentType": "all_except_custom_domains"
+    },
+    "trustedIps": {
+      "enabled": false,
+      "deploymentType": null,
+      "addresses": [],
+      "protectionMode": null
+    }
+  },
+  "domain": {
+    "name": "www.xn--oi2b90bo0vusdbte57o.site",
+    "apexName": "xn--oi2b90bo0vusdbte57o.site",
+    "projectId": "prj_R9EQQJnJ2BHfRR7mMO4FZOW0DoMi",
+    "redirect": null,
+    "redirectStatusCode": null,
+    "gitBranch": null,
+    "customEnvironmentId": null,
+    "updatedAt": 1790928593315,
+    "createdAt": 1790928593315,
+    "verified": true
+  }
+}

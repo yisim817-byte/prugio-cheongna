@@ -60,7 +60,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   );
 }
 
-function FunnelBeacon() {
+export function FunnelBeacon() {
   useEffect(() => {
     trackFunnel("page_view");
     const onClick = (event: MouseEvent) => {
@@ -108,7 +108,7 @@ const PAGE_DESCRIPTION: Record<string, string> = {
  * path가 SEO_PAGES(역할 페이지)에 있으면 index,follow + 전용 title·description + JSON-LD.
  * 그 밖의 페이지는 기존대로 noindex, nofollow.
  */
-export function pageHead(title: string, path?: string) {
+export function pageHead(title: string, path?: string, _legacyOptions?: { canonical?: boolean }) {
   const seo = path ? SEO_PAGES[path] : undefined;
   const url = path === undefined ? undefined : path === "/" ? SEO_ORIGIN : `${SEO_ORIGIN}${path}`;
   const full = seo?.title ?? `${title} | 청라 아크원 푸르지오`;
@@ -127,10 +127,19 @@ export function pageHead(title: string, path?: string) {
             { property: "og:description", content: description },
             { property: "og:url", content: url },
             { property: "og:type", content: "website" },
+            { property: "og:locale", content: "ko_KR" },
+            { property: "og:image", content: `${SEO_ORIGIN}/og.jpg` },
+            { property: "og:image:alt", content: "청라 아크원 푸르지오 · 청라국제도시 M5블록 · 상담 1666-6799" },
+            { property: "og:image:width", content: "1200" },
+            { property: "og:image:height", content: "630" },
+            { name: "twitter:card", content: "summary_large_image" },
+            { name: "twitter:title", content: full },
+            { name: "twitter:description", content: description },
+            { name: "twitter:image", content: `${SEO_ORIGIN}/og.jpg` },
           ]
         : []),
     ],
-    links: url ? [{ rel: "canonical", href: url }] : [],
+    links: url ? [{ rel: "canonical", href: url }, ...(path === "/" ? [{ rel: "preload", as: "font", type: "font/woff2", href: "/redesign/editorial.woff2", crossOrigin: "anonymous" as const }] : [])] : [],
     scripts:
       seo && url && path
         ? [
@@ -139,7 +148,7 @@ export function pageHead(title: string, path?: string) {
               ? [{ type: "application/ld+json", children: JSON.stringify(homeOfferList()) }]
               : []),
             ...(SEO_FAQS[path]?.length
-              ? [{ type: "application/ld+json", children: JSON.stringify(faqJsonLd(SEO_FAQS[path])) }]
+              ? [{ type: "application/ld+json", children: JSON.stringify(faqJsonLd(SEO_FAQS[path], url)) }]
               : []),
           ]
         : [],
@@ -157,20 +166,20 @@ function homeOfferList() {
         position: 1,
         name: "아파트",
         description: "868세대. 전용 84㎡·103㎡.",
-        url: `${SEO_ORIGIN}/plans`,
+        url: `${SEO_ORIGIN}/#products`,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "오피스텔",
-        description: "987실. 전용 105㎡·121㎡·136㎡. 11월말 분양예정.",
+        description: "987실. 전용 105㎡·121㎡·136㎡.",
         url: `${SEO_ORIGIN}/register?product=officetel`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "상업시설",
-        description: "1~2층. 11월말 분양예정.",
+        description: "근린생활시설 1~2층.",
         url: `${SEO_ORIGIN}/register?product=commercial`,
       },
     ],
@@ -187,7 +196,16 @@ function pageJsonLd(name: string, description: string, url: string, path: string
     inLanguage: "ko-KR",
     dateModified: "2026-11-14",
   };
-  if (path === "/") return { "@context": "https://schema.org", "@graph": [page] };
+  if (path === "/") return { "@context": "https://schema.org", "@graph": [
+    { ...page, about: { "@id": `${url}#property` }, mainEntity: { "@id": `${url}#faq` } },
+    { "@type": "Place", "@id": `${url}#property`, name: "청라 아크원 푸르지오", description,
+      address: { "@type": "PostalAddress", addressCountry: "KR", addressRegion: "인천광역시", addressLocality: "서해구", streetAddress: "청라동 86-1번지 (청라국제도시 M5블록)" },
+      additionalProperty: [
+        { "@type": "PropertyValue", name: "아파트", value: "868세대 · 전용 84㎡·103㎡" },
+        { "@type": "PropertyValue", name: "오피스텔", value: "987실 · 전용 105㎡·121㎡·136㎡" },
+        { "@type": "PropertyValue", name: "근린생활시설", value: "1~2층" }
+      ] }
+  ] };
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -204,10 +222,11 @@ function pageJsonLd(name: string, description: string, url: string, path: string
   };
 }
 
-function faqJsonLd(items: { q: string; a: string }[]) {
+function faqJsonLd(items: { q: string; a: string }[], url: string) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "@id": `${url}#faq`,
     mainEntity: items.map((item) => ({
       "@type": "Question",
       name: item.q,

@@ -1,8 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { OtFeature } from "@/components/ot-official";
+import { ConsultClose, ProductBoard } from "@/components/consult-band";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PLACES, img } from "@/data/content";
-import { REGISTER_LABEL } from "@/data/labels";
 import { ROLE } from "@/data/role";
 import { PlansBanner } from "@/components/notice-sections";
 
@@ -59,14 +58,15 @@ const BRAND_CARDS = [
 ] as const;
 
 /** 구간(공식 섹션 7개 + 검색용 묶음). 순서는 공식 메인과 같다. */
-const SECTIONS = ["hero", "plans", "overview", "location", "history", "premium", "brand", "contact", "site-info"] as const;
+const SECTIONS = ["hero", "products", "plans", "overview", "location", "history", "premium", "consult", "brand", "contact", "site-info"] as const;
 type SectionId = (typeof SECTIONS)[number];
 
 /** PC 장면 16개(+ 검색용 묶음). 구간 안의 단계는 공식 main.v4.css 의 data-flow-step 값과 같다. */
 const SCENES: { sec: SectionId; step: string }[] = [
   { sec: "hero", step: "hero-final" },
   { sec: "hero", step: "hero-definition" },
-  { sec: "plans", step: "plans-01" }, // PM 지시(2026-10-22): 히어로 바로 아래 평면도·공급금액 배너
+  { sec: "products", step: "products-01" },
+  { sec: "plans", step: "plans-01" }, // PM 지시(2026-10-22): 상품 안내 다음 평면도·공급금액 배너
   { sec: "overview", step: "overview-mask" },
   { sec: "overview", step: "overview-content" },
   { sec: "location", step: "location-01" },
@@ -76,6 +76,7 @@ const SCENES: { sec: SectionId; step: string }[] = [
   { sec: "premium", step: "premium-01" },
   { sec: "premium", step: "premium-02" },
   { sec: "premium", step: "premium-03" },
+  { sec: "consult", step: "consult-01" },
   { sec: "brand", step: "brand-01" },
   { sec: "brand", step: "brand-02" },
   { sec: "brand", step: "brand-03" },
@@ -86,11 +87,13 @@ export const SCENE_COUNT = SCENES.length;
 
 const NAV_ITEMS: { sec: SectionId; label: string }[] = [
   { sec: "hero", label: "HERO" },
+  { sec: "products", label: "PRODUCTS" },
   { sec: "plans", label: "PLANS" },
   { sec: "overview", label: "OVERVIEW" },
   { sec: "location", label: "LOCATION" },
   { sec: "history", label: "HISTORY" },
   { sec: "premium", label: "PREMIUM" },
+  { sec: "consult", label: "CONSULT" },
   { sec: "brand", label: "BRAND" },
   { sec: "contact", label: "CONTACT" },
 ];
@@ -493,9 +496,15 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                 <span className="om-hero__open_seg"><strong>오피스텔 · 상가 11월말 분양예정</strong>{" ·"}</span>
                 <span className="om-hero__open_seg">견본주택 별도 공지 시까지 운영</span>
               </span>
+              <p className="cv-hero__fact">아파트 868세대 · 오피스텔 987실 · 상가 1~2층</p>
+              <p className="cv-picks">
+                <a href="#cv-apt">아파트</a>
+                <a href="#cv-officetel">오피스텔</a>
+                <a href="#cv-commercial">상가</a>
+              </p>
             </div>
             <div className="om-hero__ui">
-              <a className="om-hero__scroll" href="#overview" aria-label="다음 콘텐츠로 이동" onClick={(e) => { if (stage) { e.preventDefault(); goTo("overview"); } }}>
+              <a className="om-hero__scroll" href="#products" aria-label="상품 안내로 이동" onClick={(e) => { if (stage) { e.preventDefault(); goTo("products"); } }}>
                 <span className="om-hero__scroll_line" aria-hidden="true" />
                 <span className="om-hero__scroll_label" lang="en">
                   SCROLL
@@ -507,7 +516,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                   <img className="om-hero__quick_orbit" src="/official/badge/hero_circle_text.v100.svg" alt="" aria-hidden="true" />
                   <img className="om-hero__quick_content" src="/official/badge/hero_circle_01.v100.svg" alt="분양가 상한제 적용단지" />
                 </p>
-                <Link to="/register" className="om-hero__quick_item om-hero__quick_item-regist" aria-label={REGISTER_LABEL}>
+                <a href="#products" className="om-hero__quick_item om-hero__quick_item-regist" aria-label="상품 안내">
                   <img className="om-hero__quick_orbit" src="/official/badge/hero_circle_text.v100.svg" alt="" aria-hidden="true" />
                   <span className="om-hero__quick_register" aria-hidden="true">
                     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -515,10 +524,10 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                       <path d="M3.5 19.5c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6" />
                       <path d="M18.5 6v6M15.5 9h6" />
                     </svg>
-                    <b>{REGISTER_LABEL}</b>
-                    <small lang="en">REGISTER</small>
+                    <b>상품 안내</b>
+                    <small lang="en">VIEW</small>
                   </span>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -552,11 +561,10 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
         </div>
       </section>
 
+      <ProductBoard />
+
       {/* ── 평면도·공급금액 배너 (PM 지시 2026-10-22, 상세는 /plans) ── */}
       <PlansBanner />
-
-      {/* 2026-11-10 PM 지시: 히어로 바로 아래 공식 오피스텔·상업시설 안내 화면 2장 */}
-      <OtFeature />
 
       {/* ── 3·4 사업개요 ───────────────────────────────────────────── */}
       <section id="overview" className={`om-s om-overview${active("overview")}`} data-step={step("overview")} aria-labelledby="om-overview-title">
@@ -567,6 +575,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
           </div>
           <div className="om-overview__content">
             <header className="om-overview__copy">
+              <p className="mk-eye">사업개요</p>
               <p className="om-overview__copy_text">
                 청라 10년의 기다림,
                 <br />그 모든 프리미엄을 담은
@@ -622,6 +631,14 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
             </article>
           </div>
         </div>
+        <p className="mk-dock">
+          <span className="mk-eye">사업개요</span>
+          <strong>아파트 868세대 · 오피스텔 987실 · 상가 1~2층. 1,855세대는 M5이고, 2,911은 B1 합산입니다.</strong>
+          <span className="mk-links">
+            <Link to="/plans">평면·분양가</Link>
+            <a href="#location">입지 이어서</a>
+          </span>
+        </p>
       </section>
 
       {/* ── 5·6 입지 ───────────────────────────────────────────────── */}
@@ -644,6 +661,14 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
               ))}
             </p>
             <img className="om-location__visual_image" src={"/assets/opt/location_img.v4.webp" /* orig /resources/img/pages/main/location_img.v4.png */} alt="청라 아크원 푸르지오 입지환경 이미지" loading="lazy" />
+            <p className="mk-dock">
+              <span className="mk-eye">입지</span>
+              <strong>청라하늘대교는 2026.01.05 개통. 7호선은 개통 시기 미정.</strong>
+              <span className="mk-links">
+                <Link to="/location">입지환경</Link>
+                <a href="#premium">프리미엄 이어서</a>
+              </span>
+            </p>
             <div className="om-location__title_mask">
               <h2 id="om-location-title" className="om-location__title" lang="en">
                 ARK-ONE
@@ -658,6 +683,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
             </div>
             <div className="om-location__content">
               <div className="om-location__copy">
+                <p className="mk-eye">입지 · 교통</p>
                 <p className="om-location__eyebrow" lang="en">
                   CENTRAL LOCATION
                 </p>
@@ -666,10 +692,6 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                   <br />
                   청라의 중심은 푸르지오.
                 </p>
-                <Link to="/location" className="om-location__link">
-                  <span lang="en">view more</span>
-                  <span aria-hidden="true">›</span>
-                </Link>
               </div>
               <figure className="om-location__map" role="img" aria-label="청라 국제도시 내 청라 아크원 푸르지오 위치">
                 <img className="om-location__map_image" src={asset("location_map.v4.png")} alt="청라 아크원 푸르지오 위치도" loading="lazy" />
@@ -744,15 +766,15 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
             <img className="om-history__promotion_image om-history__promotion_image-01" src={asset("history_img_01.v4.jpg")} alt="" loading="lazy" />
           </div>
           <img className="om-history__promotion_logo" src={asset("history_logo.svg")} alt="푸르지오" loading="lazy" />
-          <Link to="/register" className="om-history__promotion_link" aria-label={`청라 아크원 푸르지오 ${REGISTER_LABEL}`}>
+          <a href="#premium" className="om-history__promotion_link" aria-label="프리미엄 구간으로 이동">
             <span className="om-history__promotion_link_copy">
               <small>청라 아크원 푸르지오</small>
-              <strong>{REGISTER_LABEL}</strong>
+              <strong>프리미엄 보기</strong>
             </span>
             <span className="om-history__promotion_link_icon" aria-hidden="true">
               <img src={asset("history_arrow.svg")} alt="" />
             </span>
-          </Link>
+          </a>
           <div className="om-history__marquee" aria-hidden="true">
             <div className="om-history__marquee_track">
               <span lang="en">MASTERPLAN PROGRESS — ARKONE</span>
@@ -764,8 +786,9 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
 
       {/* ── 9·10·11 프리미엄 ───────────────────────────────────────── */}
       <section id="premium" className={`om-s om-premium${active("premium")}`} data-step={step("premium")} aria-labelledby="om-premium-title">
-        <h2 id="om-premium-title" className="om-blind">
-          ARK-ONE PREMIUM
+        <h2 id="om-premium-title" className="mk-chapter">
+          <span className="mk-chapter__eye">프리미엄</span>
+          <span className="mk-chapter__h">공간과 조망</span>
         </h2>
         <div className="om-premium__stage">
           <article className="om-premium__panel om-premium__panel-intro">
@@ -867,7 +890,17 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
             </article>
           </div>
         </div>
+        <p className="mk-dock mk-dock--premium">
+          <span className="mk-eye">프리미엄</span>
+          <strong>오션·시티뷰는 일부 세대입니다. 오피스텔은 멀티 발코니입니다.</strong>
+          <span className="mk-links">
+            <Link to="/premium">프리미엄 보기</Link>
+            <a href="#consult">상담 · 사전등록</a>
+          </span>
+        </p>
       </section>
+
+      <ConsultClose />
 
       {/* ── 12·13·14·15 브랜드 ─────────────────────────────────────── */}
       <section id="brand" className={`om-s om-brand${active("brand")}`} data-step={step("brand")} aria-labelledby="om-brand-title">

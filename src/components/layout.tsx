@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PhaseBand } from "@/components/phase-band";
 import { Footer, Header, MobileBar } from "@/components/chrome";
 import { SoonPopups } from "@/components/soon-popups";
 import { SEO_FAQS, SEO_ORIGIN, SEO_PAGES } from "@/data/seo";
 import { IMAGE_SIZES } from "@/data/image-sizes";
+import { trackFunnel } from "@/lib/funnel-client";
 
 // 헤더·푸터·상세 페이지 머리·「한눈에 보기」는 chrome.tsx 로 옮겼다. 기존 import 경로는 그대로 쓸 수 있다.
 export { Footer, PageFaq, QuickAnswer, SubHero } from "@/components/chrome";
@@ -47,6 +48,7 @@ export function Photo({
 export function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-paper text-ink">
+      <FunnelBeacon />
       {/* 작업지시서 13: 아크원푸르지오.site(A)와 같은 순서 — 헤더 → 단계 띠 → 본문. 홈 헤더는 불투명(검정)이고 히어로는 띠 아래에서 시작한다(styles.css 끝 WO13 블록) */}
       <Header />
       <PhaseBand />
@@ -56,6 +58,21 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <SoonPopups />
     </div>
   );
+}
+
+function FunnelBeacon() {
+  useEffect(() => {
+    trackFunnel("page_view");
+    const onClick = (event: MouseEvent) => {
+      const node = event.target instanceof Element ? event.target : null;
+      const link = node?.closest("a");
+      const href = link?.getAttribute("href") ?? "";
+      if (href.startsWith("tel:")) trackFunnel("phone_click");
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+  return null;
 }
 
 export function SourceNote({ children }: { children?: React.ReactNode }) {
@@ -118,11 +135,45 @@ export function pageHead(title: string, path?: string) {
       seo && url && path
         ? [
             { type: "application/ld+json", children: JSON.stringify(pageJsonLd(full, seo.answer, url, path, seo.crumb)) },
+            ...(path === "/"
+              ? [{ type: "application/ld+json", children: JSON.stringify(homeOfferList()) }]
+              : []),
             ...(SEO_FAQS[path]?.length
               ? [{ type: "application/ld+json", children: JSON.stringify(faqJsonLd(SEO_FAQS[path])) }]
               : []),
           ]
         : [],
+  };
+}
+
+function homeOfferList() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "청라 아크원 푸르지오 상담 상품",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "아파트",
+        description: "868세대. 전용 84㎡·103㎡.",
+        url: `${SEO_ORIGIN}/plans`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "오피스텔",
+        description: "987실. 전용 105㎡·121㎡·136㎡. 11월말 분양예정.",
+        url: `${SEO_ORIGIN}/register?product=officetel`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "상업시설",
+        description: "1~2층. 11월말 분양예정.",
+        url: `${SEO_ORIGIN}/register?product=commercial`,
+      },
+    ],
   };
 }
 
@@ -134,7 +185,7 @@ function pageJsonLd(name: string, description: string, url: string, path: string
     description,
     url,
     inLanguage: "ko-KR",
-    dateModified: "2026-10-09",
+    dateModified: "2026-11-14",
   };
   if (path === "/") return { "@context": "https://schema.org", "@graph": [page] };
   return {

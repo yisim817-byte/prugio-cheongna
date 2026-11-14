@@ -4,6 +4,7 @@ import { PROJECT_PHONE_DISPLAY, PROJECT_PHONE_TEL } from "@/data/content";
 import { Shell, pageHead } from "@/components/layout";
 import { REGISTER_LABEL } from "@/data/labels";
 import { submitLead } from "@/lib/leads.functions";
+import { trackFunnel } from "@/lib/funnel-client";
 
 export const Route = createFileRoute("/register")({
   // 작업지시서 13: 옛 방문예약 링크(/register?visit=1#visit)는 방문예약 전용 페이지로 보낸다.
@@ -86,7 +87,8 @@ function Page() {
     try {
       const result = await submitLead({
         data: {
-          product, name, phone, birth6, sido, sigungu, dong, consent: true, entry: "/register",
+          product, name, phone, birth6, sido, sigungu, dong, consent: true,
+          entry: `${window.location.pathname}${window.location.search}`,
         },
       });
       if (!result.ok) {
@@ -94,6 +96,7 @@ function Page() {
         return;
       }
       setDone({ receiptNo: result.receiptNo, duplicate: result.duplicate, notifyStatus: result.notifyStatus, product });
+      trackFunnel("form_complete", "register");
       setDialog(false);
     } catch {
       setError("저장하지 못했습니다. 입력값을 확인한 뒤 다시 시도해 주세요. 같은 번호로 다시 보내도 접수가 중복 생성되지는 않습니다.");
@@ -107,9 +110,9 @@ function Page() {
       <main className="ak-wrap ak-page">
         <section className="register-layout">
           <aside className="register-layout__summary" aria-label="이벤트 및 일정 안내">
-            <p className="prereg-deadline" style={{ color: "#a8834a", fontWeight: 700, letterSpacing: "-0.01em" }}>상가·오피스텔 상시 접수</p>
+            <p className="prereg-deadline">상가·오피스텔 상시 접수</p>
             <p>상가·오피스텔 사전등록 후 오피스텔·상가 계약 시 백화점 상품권 50만원 (롯데·현대·신세계 중 선택) · 11월 20일(금)까지</p>
-            <a href="/event">유의사항 보기</a>
+            <a href="/event/apt">혜택 조건 보기</a>
             <div className="register-layout__schedule">
               <h2>모집 일정</h2>
               <p>입주자모집공고 게시 2026.10.22(목) · 견본주택 별도 공지 시까지 운영 · 세부 일정 문의 {PROJECT_PHONE_DISPLAY}</p>
@@ -140,6 +143,7 @@ function Page() {
               <div className="reg-gate">
                 <img className="reg-gate__poster" src="/official/register/register-poster.jpg" width={590} height={842} alt="" />
                 <h2 className="reg-gate__title">청라 아크원 푸르지오 사전고객</h2>
+                {product ? <p className="reg-gate__pick">선택 상품 · {PRODUCT_LABEL[product]}</p> : <p className="reg-gate__pick">아파트 · 오피스텔 · 상가 중 상품을 고릅니다</p>}
                 <button type="button" className="reg-gate__open" onClick={() => setDialog(true)}>사전고객등록</button>
                 <div className="reg-dialog" hidden={!dialog} onClick={(e) => { if (e.target === e.currentTarget) setDialog(false); }}>
                   <div className="reg-dialog__sheet">
@@ -149,7 +153,7 @@ function Page() {
                         <button type="button" className="reg-dialog__back" aria-label="뒤로" onClick={() => setDialog(false)}>‹</button>
                         <h2 id="reg-dialog-title">참여하기</h2>
                       </div>
-                      <form className="mt-4 space-y-5 px-4 pb-6" onSubmit={onSubmit} noValidate>
+                      <form className="mt-4 space-y-5 px-4 pb-6" onSubmit={onSubmit} onFocus={() => trackFunnel("form_start", "register")} noValidate>
                         <p className="reg-dialog__subject">청라 아크원 푸르지오 사전고객</p>
                         <fieldset className="block text-sm">
                           <legend className="font-medium">등록하실 상품</legend>

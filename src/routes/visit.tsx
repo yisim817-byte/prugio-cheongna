@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Shell, SubHero, pageHead } from "@/components/layout";
 import { PROJECT_PHONE_DISPLAY, PROJECT_PHONE_TEL } from "@/data/content";
 import { loadVisitConfig, VISIT_SLOT_LABEL, type VisitOption } from "@/lib/visit-config";
+import { trackFunnel } from "@/lib/funnel-client";
 
 // 작업지시서 13 (2026-10-22): 모델하우스 방문예약 전용 페이지. 사전고객등록(/register)과 별도로 접수한다(/api/visit).
 // 문구는 지시서 4-2 그대로. 서식은 아크원푸르지오.site 등록 페이지(제목·입력칸·버튼)를 따른다.
@@ -75,6 +76,7 @@ function Page() {
       }
       const when = body.visit_date && body.date_label ? `${body.date_label} ${body.slot_label}` : "";
       setDone({ receiptNo: body.receipt_no, duplicate: body.duplicate, when });
+      trackFunnel("form_complete", "visit");
     } catch {
       setError("접수하지 못했습니다. 잠시 후 다시 시도해 주세요.");
     } finally {
@@ -100,7 +102,7 @@ function Page() {
               <Link to="/register" className="vr__submit">사전고객등록도 하기</Link>
             </div>
           ) : (
-            <form className="vr__form" onSubmit={onSubmit} noValidate>
+            <form className="vr__form" onSubmit={onSubmit} onFocus={() => trackFunnel("form_start", "visit")} noValidate>
               <input type="text" name="hp" tabIndex={-1} autoComplete="off" className="vr__hp" aria-hidden="true" />
               <label className="vr__field">
                 <span className="vr__label">이름 <em>*</em></span>

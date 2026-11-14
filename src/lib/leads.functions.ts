@@ -310,6 +310,17 @@ export const adminSnapshot = createServerFn({ method: "GET" })
     } catch {
       visits = [];
     }
+    let funnel: { name: string; form: string; n: number }[] | null = null;
+    try {
+      funnel = await sql<{ name: string; form: string; n: number }>`
+        select name, form, count(*)::int as n
+        from funnel_events
+        where site_id = ${SITE}
+        group by name, form
+      `;
+    } catch {
+      funnel = null;
+    }
     const { alertSetup } = await import("./kakao.server");
     return {
       ok: true as const,
@@ -319,6 +330,7 @@ export const adminSnapshot = createServerFn({ method: "GET" })
       leads,
       visits,
       accounts,
+      funnel,
     };
   });
 

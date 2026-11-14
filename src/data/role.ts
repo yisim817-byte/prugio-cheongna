@@ -12,7 +12,7 @@ const BASE_DATE = "2026.09.17";
 
 export const ROLE: Role = {
   tone: "mist",
-  h1: ["청라 아크원 푸르지오", "위치·교통 안내"],
+  h1: ["청라 아크원 푸르지오", "단 하나의 주거명작"],
   heroLink: { to: "/contact", label: "오시는 길 보기" },
   figure: {
     kind: "plate",

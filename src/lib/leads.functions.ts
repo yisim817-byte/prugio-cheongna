@@ -10,6 +10,7 @@ const SITE = SITE_ID;
 
 import { leadSchema } from "@/lib/lead-input";
 import { submitLeadRecord } from "@/lib/lead-submission.server";
+import { PREREG_ONLINE, PREREG_CLOSED_MESSAGE } from "@/data/prereg-mode";
 
 type Access = { role: "owner" | "staff"; loginId: string; mustChange: boolean };
 
@@ -36,7 +37,8 @@ async function readyAccess(userId: string): Promise<Access | null> {
 
 export const submitLead = createServerFn({ method: "POST" })
   .validator((raw: unknown) => leadSchema.parse(raw))
-  .handler(async ({ data }) => submitLeadRecord(data, {
+  // 작업지시서 18: 온라인 등록 일시 폐쇄 중에는 저장·알림 없이 전화 안내만 돌려준다.
+  .handler(async ({ data }) => !PREREG_ONLINE ? { ok: false as const, error: PREREG_CLOSED_MESSAGE } : submitLeadRecord(data, {
     siteId: SITE,
     dbSource,
     env: { vercelEnv: process.env.VERCEL_ENV, nodeEnv: process.env.NODE_ENV },

@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Shell, SubHero, pageHead } from "@/components/layout";
 import { PROJECT_PHONE_DISPLAY, PROJECT_PHONE_TEL } from "@/data/content";
+import { PhoneVisitPanel } from "@/components/visit-phone";
+import { VISIT_ONLINE, VISIT_PHONE_INTRO } from "@/data/visit-mode";
 import { loadVisitConfig, VISIT_SLOT_LABEL, type VisitOption } from "@/lib/visit-config";
 import { trackFunnel } from "@/lib/funnel-client";
 
@@ -31,6 +33,7 @@ function Page() {
   const [done, setDone] = useState<Done | null>(null);
 
   useEffect(() => {
+    if (!VISIT_ONLINE) return; // 전화 접수 중에는 날짜 목록을 불러오지 않는다.
     let live = true;
     loadVisitConfig().then((c) => {
       if (!live) return;
@@ -90,9 +93,11 @@ function Page() {
       <main className="ak-wrap ak-page">
         <div className="vr">
           <h2 className="vr__title">모델하우스 방문예약</h2>
-          <p className="vr__desc">방문 희망 날짜를 남겨 주시면, 담당자가 확인 후 방문 시간을 전화로 안내해 드립니다.</p>
+          <p className="vr__desc">{VISIT_ONLINE ? "방문 희망 날짜를 남겨 주시면, 담당자가 확인 후 방문 시간을 전화로 안내해 드립니다." : VISIT_PHONE_INTRO}</p>
           <p className="vr__loc">견본주택 위치 · 인천광역시 서해구 청라동 87-1 · 별도 공지 시까지 운영</p>
-          {done ? (
+          {!VISIT_ONLINE ? (
+            <PhoneVisitPanel />
+          ) : done ? (
             <div className="vr__done" role="status">
               <p className="vr__done_h">
                 {done.duplicate ? "이미 접수된 방문예약입니다." : "방문예약 신청이 접수되었습니다."}
@@ -161,14 +166,14 @@ function Page() {
               <button type="submit" disabled={pending} className="vr__submit">{pending ? "접수 중" : "방문예약 신청"}</button>
             </form>
           )}
-          <div className="vr__notes">
+          {VISIT_ONLINE ? <div className="vr__notes">
             <p>※ 방문 시간은 담당자가 전화로 확정 안내합니다.</p>
             <p>※ 방문예약은 청약 신청이 아니며, 청약 자격·순위와 관계없습니다.</p>
             <p>
               ※ 방문예약은 사전고객등록과 별개입니다. 백화점 상품권·코스트코 회원권 이벤트는 사전고객등록을 한 분이 대상입니다.{" "}
               <Link to="/register" className="vr__link">사전고객등록 하기</Link>
             </p>
-          </div>
+          </div> : null}
         </div>
       </main>
     </Shell>

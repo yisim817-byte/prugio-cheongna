@@ -14,23 +14,23 @@ const PRODUCTS = [
   },
   {
     id: "officetel",
-    href: "/event/apt",
+    href: "/register",
     title: "오피스텔",
     fact: "987실 · 전용 105㎡·121㎡·136㎡",
     note: "11월말 분양예정 · 멀티 발코니",
     image: "/official/soon/officetel_bg.png",
     alt: "청라 아크원 푸르지오 오피스텔 안내 이미지",
-    cta: "계약 시 혜택 보기",
+    cta: "사전고객등록 안내",
   },
   {
     id: "commercial",
-    href: "/event/apt",
+    href: "/register",
     title: "상가",
     fact: "상업시설 1~2층",
     note: "11월말 분양예정",
     image: "/official/soon/commercial_bg.png",
     alt: "청라 아크원 푸르지오 상업시설 안내 이미지",
-    cta: "계약 시 혜택 보기",
+    cta: "사전고객등록 안내",
   },
 ] as const;
 
@@ -100,14 +100,6 @@ export function ConsultClose() {
             방문예약
           </Link>
         </div>
-        <aside className="cv__benefit">
-          <p>
-            <strong>상가·오피스텔 계약 시</strong>
-            이 홈페이지에서 사전등록한 뒤 오피스텔 또는 상가를 계약하면, 백화점 상품권 50만원(롯데·현대·신세계 중 1종)을
-            계약 시 지급합니다. 기간은 2026년 11월 20일(금)까지이며, 등록만으로 지급되지 않습니다.
-          </p>
-          <a href="/event/apt">혜택 조건 보기</a>
-        </aside>
         <div className="cv__b103">
           <p>
             <strong>103㎡B 선착순</strong>

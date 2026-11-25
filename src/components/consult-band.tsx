@@ -14,23 +14,23 @@ const PRODUCTS = [
   },
   {
     id: "officetel",
-    href: "/register",
+    href: PROJECT_PHONE_TEL,
     title: "오피스텔",
     fact: "987실 · 전용 105㎡·121㎡·136㎡",
     note: "11월말 분양예정 · 멀티 발코니",
     image: "/official/soon/officetel_bg.png",
     alt: "청라 아크원 푸르지오 오피스텔 안내 이미지",
-    cta: "사전고객등록 안내",
+    cta: "전화로 방문예약",
   },
   {
     id: "commercial",
-    href: "/register",
+    href: PROJECT_PHONE_TEL,
     title: "상가",
     fact: "상업시설 1~2층",
     note: "11월말 분양예정",
     image: "/official/soon/commercial_bg.png",
     alt: "청라 아크원 푸르지오 상업시설 안내 이미지",
-    cta: "사전고객등록 안내",
+    cta: "전화로 방문예약",
   },
 ] as const;
 
@@ -93,8 +93,8 @@ export function ConsultClose() {
           <a className="cv__btn cv__btn--solid ak-num" href={PROJECT_PHONE_TEL}>
             전화 상담 {PROJECT_PHONE_DISPLAY}
           </a>
-          <a className="cv__btn cv__btn--line" href="/register">
-            사전고객등록
+          <a className="cv__btn cv__btn--line" href={PROJECT_PHONE_TEL}>
+            전화로 방문예약
           </a>
           <Link className="cv__btn cv__btn--line" to="/visit">
             방문예약
@@ -103,7 +103,7 @@ export function ConsultClose() {
         <div className="cv__b103">
           <p>
             <strong>103㎡B 선착순</strong>
-            <span>참여의향서는 2026년 11월 17일(화)부터 견본주택에서 본인이 접수합니다. 공급 일정은 미정입니다.</span>
+            <span>참여의향서는 2026년 11월 17일(화)부터 견본주택에서 본인이 접수합니다. 103㎡B 선착순 공급은 2026년 11월 28일(토) 진행 예정입니다.</span>
           </p>
           <Link to="/103b">접수 안내</Link>
         </div>

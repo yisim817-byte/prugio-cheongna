@@ -47,6 +47,7 @@ export const NAV: NavItem[] = [
       { label: "특별공급 안내", href: "/docspecial" },
       { label: "일반공급 안내", href: "/docnormal" },
       { label: "103㎡B 선착순 안내", href: "/103b" },
+      { label: "아파트 vs 오피스텔 비교", href: "/compare" },
     ],
   },
   {
@@ -58,7 +59,8 @@ export const NAV: NavItem[] = [
       { label: "홍보영상", href: "/video" },
     ],
   },
-  { label: "사전고객등록", en: "REGISTER", href: "/register" },
+  { label: "견본주택 안내", en: "MODEL HOUSE", href: "/event" },
+  { label: "방문예약", en: "VISIT", href: "/visit" },
 ];
 
 export const OVERVIEW_ROWS: [string, string][] = [

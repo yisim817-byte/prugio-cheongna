@@ -1,6 +1,7 @@
 import { getSql, dbSource } from "@/lib/db";
 import { SITE_ID } from "@/data/content";
 import { checkVisit } from "@/lib/visit.server";
+import { VISIT_ONLINE } from "@/data/prereg-mode";
 
 // 작업지시서 13 (2026-10-22): 모델하우스 방문예약 접수(/api/visit). 사전고객등록(leads)과 별도 표 visit_reservations.
 // - 날짜는 arkone-visit-config 목록 안에서만 저장(목록 밖·설정 꺼짐이면 날짜만 비우고 접수).
@@ -31,6 +32,7 @@ export type VisitReply =
 
 export async function submitVisit(raw: Body, host: string): Promise<{ status: number; body: VisitReply }> {
   const bad = (status: number, reason: string, message: string) => ({ status, body: { ok: false as const, reason, message } });
+  if (!VISIT_ONLINE) return bad(403, "closed", "견본주택 방문예약은 전화로만 받습니다.");
   if (typeof raw.hp === "string" && raw.hp.length > 0) return bad(400, "rejected", "접수하지 못했습니다.");
   const name = str(raw.name, 20);
   if (name.length < 2) return bad(400, "name", "이름을 두 글자 이상 입력해 주세요.");

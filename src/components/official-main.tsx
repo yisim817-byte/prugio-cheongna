@@ -493,7 +493,7 @@ export function OfficialMain({ children }: { children?: React.ReactNode }) {
                 <span className="om-hero__role">{ROLE.h1[1]}</span>
               </h1>
               <span className="om-hero__open">
-                <span className="om-hero__open_seg"><strong>오피스텔 · 상가 11월말 분양예정</strong>{" ·"}</span>
+                <span className="om-hero__open_seg"><strong>오피스텔 청약 12.7(월) · 상가 분양 예정</strong>{" ·"}</span>
                 <span className="om-hero__open_seg">견본주택 별도 공지 시까지 운영</span>
               </span>
               <p className="cv-hero__fact">아파트 868세대 · 오피스텔 987실 · 상가 1~2층</p>
